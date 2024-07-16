@@ -13,7 +13,7 @@ export default function Home() {
                     <HeaderSection />
                     <Divider margin={'24px 0 0 0'} />
                     <IntroSection />
-                    <Divider margin={'0 0 24px 0'} />
+                    <Divider />
                     <ContentSection />
                 </div>
             </section>

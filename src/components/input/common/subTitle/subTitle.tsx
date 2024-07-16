@@ -1,9 +1,9 @@
-'use client'
+'use client';
 
 import {ChangeEvent, memo, useCallback, useState} from 'react';
 import ResumeInput from '@/components/input/common/resumeInput/resumeInput';
 
-function SubTitle() {
+function SubTitle({placeholder, align = 'left'}: { placeholder?: string, align: 'left' | 'center' | 'right' }) {
 
     const [value, setValue] = useState('');
 
@@ -13,7 +13,7 @@ function SubTitle() {
 
     return (
         <ResumeInput className={'resume__sub-title'} value={value} onChange={onChange}
-            placeholder={'Intro'} fontSize={18} bold align={'left'} />
+                     placeholder={placeholder} fontSize={18} bold align={align}/>
     );
 };
 

@@ -38,7 +38,7 @@ function IntroSection() {
     return (
         <section ref={rootRef} className={'simple-resume__intro'}>
             <div className="simple-resume__intro__left">
-                <SubTitle/>
+                <SubTitle placeholder={'Intro'}/>
                 <ResumeTextarea ref={textareaRef} className={'simple-resume__intro__textarea'}
                                 value={intro} onChange={onChangeIntro} placeholder={introPlaceholder}
                                 fontSize={14} onResize={onResizeTextarea}/>

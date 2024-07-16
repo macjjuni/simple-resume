@@ -1,8 +1,8 @@
-import {memo, useMemo} from 'react';
+import {CSSProperties, memo, useMemo} from 'react';
 import {DividerProps} from '@/components/divider/initialize/divider.interface';
 import "./divider.scss";
 
-function Divider({direction = 'horizon', margin}: DividerProps) {
+function Divider({direction = 'horizon', margin, height}: DividerProps) {
 
     const rootClass = useMemo(()=> {
         const clazz = [];
@@ -14,10 +14,13 @@ function Divider({direction = 'horizon', margin}: DividerProps) {
     }, [direction])
 
     const rootStyle = useMemo(() => {
-        if (margin) {
-            return { margin }
-        }
-    }, [margin])
+        const styles: CSSProperties = {};
+
+        if (margin) { styles.margin = margin; }
+        if (height) { styles.height = height; }
+
+        return styles;
+    }, [margin, height])
 
     return (<div className={`simple__resume__divider ${rootClass}`} style={rootStyle} />);
 }

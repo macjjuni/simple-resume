@@ -1,0 +1,42 @@
+
+.simple-resume__content__container {
+    display: flex;
+    flex-direction: column;
+    flex: 1 auto auto;
+
+    $simple-resume__content__left__width: 240px;
+    $simple-resume__content__right__width: calc(100% - 240px);
+
+    .simple-resume__content__header {
+        display: flex;
+        align-items: center;
+        border-bottom: 1px solid #000;
+
+        .simple-resume__content__header__left, .simple-resume__content__header__right {
+            padding: 16px;
+        }
+        .simple-resume__content__header__left {
+            width: $simple-resume__content__left__width;
+            border-right: 1px solid #000;
+        }
+        .simple-resume__content__header__right { width: $simple-resume__content__right__width; }
+    }
+
+    .simple-resume__content__body {
+        display: flex;
+        justify-content: flex-start;
+        flex: 1 1 auto;
+        height: 100%;
+
+        .simple-resume__content__body__left, .simple-resume__content__body__right {
+            padding: 16px;
+        }
+        .simple-resume__content__body__left {
+            width: $simple-resume__content__left__width;
+            border-right: 1px solid #000;
+        }
+        .simple-resume__content__body__right {
+            width: $simple-resume__content__right__width;
+        }
+    }
+}
