@@ -1,0 +1,12 @@
+.size__info {
+    position: absolute;
+    top: 24px;
+    right: 24px;
+
+    font-size: 24px;
+}
+
+
+@media print {
+    .size__info { display: none; }
+}

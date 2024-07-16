@@ -1,0 +1,11 @@
+
+.simple-resume__web__container {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 12px;
+
+    .simple-resume__web__input {
+        width: calc(100% - (28px + 12px));
+    }
+}

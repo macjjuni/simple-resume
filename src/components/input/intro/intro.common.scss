@@ -1,0 +1,12 @@
+
+.simple-resume__contact__item__container {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 8px;
+
+    .simple-resume__contact__item__input {
+        width: calc(100% - (28px + 12px));
+        line-height: 1.5;
+    }
+}

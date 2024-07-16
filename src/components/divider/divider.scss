@@ -1,0 +1,15 @@
+$simple-resume__divider__line-width: 1px;
+
+.simple__resume__divider {
+    position: relative;
+
+    &.simple__resume__divider--horizon {
+        width: 100%;
+        border-top: $simple-resume__divider__line-width solid #000;
+    }
+
+    &.simple__resume__divider--vertical {
+        border-left: $simple-resume__divider__line-width solid #000;
+        height: 100%;
+    }
+}
