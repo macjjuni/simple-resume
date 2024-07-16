@@ -7,7 +7,7 @@ import '@/components/input/intro/intro.common.scss';
 
 function Github() {
 
-    const [value, setValue] = useState('https://github.com/macjjuni');
+    const [value, setValue] = useState('');
 
     const onChange = useCallback((e: ChangeEvent<HTMLInputElement>) => {
         setValue((e.target as HTMLInputElement).value);

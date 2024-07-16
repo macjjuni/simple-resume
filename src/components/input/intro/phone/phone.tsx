@@ -17,7 +17,7 @@ function Phone() {
         <div className="simple-resume__contact__item__container">
             <IphoneSvg/>
             <ResumeInput className={'simple-resume__contact__item__input'} value={value} onChange={onChange}
-                         placeholder={'010-XXXX-XXXX'} fontSize={12}/>
+                         placeholder={'010-xxxx-xxxx'} fontSize={12}/>
         </div>
     );
 };
