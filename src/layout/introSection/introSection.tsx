@@ -1,7 +1,7 @@
 'use client';
 
 import React, {ChangeEvent, memo, useCallback, useRef, useState} from 'react';
-import {Email, Phone, SubTitle, Web, Github} from '@/components/input';
+import {EmailInput, PhoneInput, SubTitle, WebInput, GithubInput} from '@/components/input';
 import ResumeTextarea from '@/components/input/common/resumeTextarea/resumeTextarea';
 import {ResumeTextareaRefs} from '@/components/input/common/resumeTextarea/resumeTextarea.interface';
 import './introSection.scss';
@@ -16,6 +16,7 @@ function IntroSection() {
 
     const rootRef = useRef<HTMLDivElement | null>(null);
     const textareaRef = useRef<ResumeTextareaRefs | null>(null);
+    const [introTitle, setIntroTitle] = useState('');
     const [intro, setIntro] = useState('');
 
     // endregion
@@ -38,16 +39,16 @@ function IntroSection() {
     return (
         <section ref={rootRef} className={'simple-resume__intro'}>
             <div className="simple-resume__intro__left">
-                <SubTitle placeholder={'Intro'}/>
+                <SubTitle value={introTitle} setValue={setIntroTitle} placeholder={'About Me'}/>
                 <ResumeTextarea ref={textareaRef} className={'simple-resume__intro__textarea'}
                                 value={intro} onChange={onChangeIntro} placeholder={introPlaceholder}
                                 fontSize={14} onResize={onResizeTextarea}/>
             </div>
             <div className="simple-resume__intro__right">
-                <Phone/>
-                <Email/>
-                <Web/>
-                <Github/>
+                <PhoneInput/>
+                <EmailInput/>
+                <WebInput/>
+                <GithubInput/>
             </div>
         </section>
     );

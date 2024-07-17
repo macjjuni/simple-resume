@@ -1,8 +1,11 @@
-export { default as Name } from '@/components/input/header/name/name';
-export { default as Position } from '@/components/input/header/position/position';
+export { default as NameInput } from '@/components/input/header/nameInput/nameInput';
+export { default as PositionInput } from '@/components/input/header/positionInput/positionInput';
 export { default as SubTitle } from '@/components/input/common/subTitle/subTitle';
-export { default as Phone } from '@/components/input/intro/phone/phone';
-export { default as Email } from '@/components/input/intro/email/email';
-export { default as Web } from '@/components/input/intro/web/web';
-export { default as Github } from '@/components/input/intro/github/github';
+export { default as PhoneInput } from '@/components/input/intro/phoneInput/phoneInput';
+export { default as EmailInput } from '@/components/input/intro/emailInput/emailInput';
+export { default as WebInput } from '@/components/input/intro/webInput/webInput';
+export { default as GithubInput } from '@/components/input/intro/githubInput/githubInput';
+export { default as EducateInputList } from '@/components/input/content/educateInputList/educateInputList';
+export { default as EducateTitleInput } from '@/components/input/content/educateTitleInput/educateTitleInput';
+export { default as SkillTitleInput } from '@/components/input/content/skillTitleInput/skillTitleInput';
 

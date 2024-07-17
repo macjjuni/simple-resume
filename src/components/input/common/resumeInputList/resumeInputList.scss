@@ -1,0 +1,78 @@
+
+
+.simple-resume__input-list__wrapper {
+    position: relative;
+
+
+    .simple-resume__input-list {
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: flex-start;
+        gap: 8px;
+
+        .simple-resume__input-list__item {
+            padding-left: 8px;
+            position: relative;
+            width: calc(100% - 8px);
+
+            &:after{
+                content: '';
+                position: absolute;
+                top: 48%;
+                left: 0;
+                width: 4px;
+                height: 4px;
+                border-radius: 50%;
+                background-color: #000;
+                transform: translate(0, -50%);
+            }
+
+            .simple-resume__input-list__item__remove-button {
+                position: absolute;
+                top: -8px;
+                right: -8px;
+                width: 16px;
+                height: 16px;
+                border-radius: 50%;
+                border: none;
+                background-color: red;
+                transition: 0.24s ease;
+                cursor: pointer;
+                z-index: 1;
+
+                &:after, &:before {
+                    content: '';
+                    position: absolute;
+                    background-color: #fff;
+                    transform: translate(-50%, -50%) rotate(45deg);
+                    border-radius: 2px;
+                }
+
+                &:after {
+                    width: 2px;
+                    height: 12px;
+                    top: 50%;
+                    left: 50%;
+                }
+                &:before {
+                    width: 12px;
+                    height: 2px;
+                    top: 50%;
+                    left: 50%;
+                }
+
+                &:hover {
+                    box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
+                }
+            }
+        }
+    }
+}
+
+
+@media print {
+    .simple-resume__input-list__item__remove-button {
+        display: none;
+    }
+}

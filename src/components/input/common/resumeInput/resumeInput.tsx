@@ -1,11 +1,12 @@
-import {CSSProperties, memo, useCallback, useMemo, useRef} from 'react';
+import {ChangeEvent, CSSProperties, memo, useCallback, useMemo, useRef} from 'react';
 import './resumeInput.scss'
 import {ResumeInputProps} from '@/components/input/common/resumeInput/resumeInput.interface';
+import {set} from 'immutable';
 
 
 const focusClassName = 'simple-resume__input__wrapper--focus';
 
-function ResumeInput({type = 'text', className, value, onChange, placeholder, style, bold, fontSize, align}: ResumeInputProps) {
+function ResumeInput({type = 'text', className, value, setValue, onChange, placeholder, style, bold, fontSize, align}: ResumeInputProps) {
 
     // region [Styles]
 
@@ -33,6 +34,13 @@ function ResumeInput({type = 'text', className, value, onChange, placeholder, st
         return clazz.join(' ');
     }, [className])
 
+    const focusLineClassName = useMemo(() => {
+        if (value.length === 0) {
+            return 'simple-resume__input__focus-line--empty'
+        }
+        return '';
+    }, [value])
+
     // endregion
 
 
@@ -51,6 +59,11 @@ function ResumeInput({type = 'text', className, value, onChange, placeholder, st
 
     // region [Events]
 
+    const onChangeValue = useCallback((e: ChangeEvent<HTMLInputElement>) => {
+        setValue?.((e.target as HTMLInputElement).value);
+        onChange?.(e);
+    }, [setValue, onChange])
+
     const onFocus = useCallback(() => {
         addFocusEffect()
     }, [addFocusEffect]);
@@ -65,9 +78,9 @@ function ResumeInput({type = 'text', className, value, onChange, placeholder, st
     return (
         <div ref={wrapperRef} className={`simple-resume__input__wrapper ${rootClassName}`}>
             <input type={'text'} className={`simple-resume__input`}
-                   value={value} onChange={onChange} style={rootStyle} placeholder={placeholder}
+                   value={value} onChange={onChangeValue} style={rootStyle} placeholder={placeholder}
                    onFocus={onFocus} onBlur={onBlur} />
-            <div className="simple-resume__input__focus-line" />
+            <div className={`simple-resume__input__focus-line ${focusLineClassName}`} />
         </div>
     );
 }

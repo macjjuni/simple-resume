@@ -1,42 +1,100 @@
 
 .simple-resume__content__container {
     display: flex;
-    flex-direction: column;
-    flex: 1 auto auto;
+    justify-content: flex-start;
+    flex: 1 1 auto;
+    height: 100%;
 
     $simple-resume__content__left__width: 240px;
     $simple-resume__content__right__width: calc(100% - 240px);
 
-    .simple-resume__content__header {
-        display: flex;
-        align-items: center;
-        border-bottom: 1px solid #000;
+    .simple-resume__add-button {
+        position: relative;
+        width: 24px;
+        height: 24px;
+        border-radius: 50%;
+        border: 1px solid #eee;
+        background-color: #45a2ff;
+        transition: 0.24s ease;
+        cursor: pointer;
+        z-index: 10;
+        box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
 
-        .simple-resume__content__header__left, .simple-resume__content__header__right {
-            padding: 16px;
+        &:after, &:before {
+            content: '';
+            position: absolute;
+            background-color: #fff;
+            transform: translate(-50%, -50%);
+            border-radius: 2px;
         }
-        .simple-resume__content__header__left {
-            width: $simple-resume__content__left__width;
-            border-right: 1px solid #000;
+
+        &:after {
+            width: 2px;
+            height: 12px;
+            top: 50%;
+            left: 50%;
         }
-        .simple-resume__content__header__right { width: $simple-resume__content__right__width; }
+        &:before {
+            width: 12px;
+            height: 2px;
+            top: 50%;
+            left: 50%;
+        }
+
+        &:hover {
+            box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+        }
     }
 
-    .simple-resume__content__body {
+    .simple-resume__content__body__left {
         display: flex;
-        justify-content: flex-start;
-        flex: 1 1 auto;
-        height: 100%;
+        flex-direction: column;
+        width: $simple-resume__content__left__width;
+        border-right: 1px solid #000;
 
-        .simple-resume__content__body__left, .simple-resume__content__body__right {
-            padding: 16px;
+        .simple-resume__content__body__left__header {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 16px 20px 16px 16px;
+            border-bottom: 1px solid #000;
+
+            .educate__title__input { width: calc(100% - (8px + 24px)); }
         }
-        .simple-resume__content__body__left {
-            width: $simple-resume__content__left__width;
-            border-right: 1px solid #000;
+
+        .simple-resume__content__body__left__body {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            padding: 16px 20px 16px 16px;
+
+            .simple-resume__content__body__left__top__educate-date { width: 70%; }
+
+            .simple-resume__content__body__left__body__skill__container {
+                display: flex;
+                flex-direction: column;
+                gap: 8px;
+            }
         }
-        .simple-resume__content__body__right {
-            width: $simple-resume__content__right__width;
+
+        .simple-resume__content__body__left__bottom {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+
+            .simple-resume__content__body__left__bottom__skill-sub-title {
+                width: 70%;
+            }
         }
+
     }
+    .simple-resume__content__body__right {
+        width: $simple-resume__content__right__width;
+    }
+
+}
+
+@media print {
+    .simple-resume__add-skill-button { display: none; }
 }

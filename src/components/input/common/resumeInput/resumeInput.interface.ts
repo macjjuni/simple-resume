@@ -1,9 +1,10 @@
-import {ChangeEvent, CSSProperties, KeyboardEvent} from 'react';
+import {ChangeEvent, CSSProperties, Dispatch, KeyboardEvent, SetStateAction} from 'react';
 
 
 export interface ResumeInputProps {
     value: string
-    onChange: (e: ChangeEvent<HTMLInputElement>) => void
+    setValue?: Dispatch<SetStateAction<string>>
+    onChange?: (e: ChangeEvent<HTMLInputElement>) => void
 
     className?: string
     placeholder?: string

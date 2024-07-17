@@ -9,7 +9,7 @@ const focusClassName = 'simple-resume__textarea__wrapper--focus';
 
 const ResumeTextarea = forwardRef<ResumeTextareaRefs>(({className, value, onChange, placeholder, style, bold, fontSize, align, onResize}: ResumeTextareaProps, ref) => {
 
-    // region [Styles]
+    // region [Hooks]
 
     const wrapperRef = useRef<HTMLDivElement | null>(null);
     const rootRef = useRef<HTMLTextAreaElement | null>(null);
@@ -44,6 +44,13 @@ const ResumeTextarea = forwardRef<ResumeTextareaRefs>(({className, value, onChan
 
         return clazz.join(' ');
     }, [className]);
+
+    const focusLineClassName = useMemo(() => {
+        if (value.length === 0) {
+            return 'simple-resume__textarea__focus-line--empty'
+        }
+        return '';
+    }, [value])
 
     // endregion
 
@@ -91,7 +98,7 @@ const ResumeTextarea = forwardRef<ResumeTextareaRefs>(({className, value, onChan
             <textarea ref={rootRef} className={`simple-resume__textarea ${rootClassName}`}
                       value={value} onChange={onChangeTextArea} style={rootStyle} placeholder={placeholder}
                       onFocus={onFocus} onBlur={onBlur}/>
-            <div className="simple-resume__textarea__focus-line"/>
+            <div className={`simple-resume__textarea__focus-line ${focusLineClassName}`} />
         </div>
     );
 });
