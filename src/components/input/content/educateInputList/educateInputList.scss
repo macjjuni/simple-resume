@@ -69,3 +69,7 @@
         }
     }
 }
+
+@media print {
+    .simple-resume__input-list__item__hide-button { display: none; }
+}
