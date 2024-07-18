@@ -6,7 +6,7 @@ import {set} from 'immutable';
 
 const focusClassName = 'simple-resume__input__wrapper--focus';
 
-function ResumeInput({type = 'text', className, value, setValue, onChange, placeholder, style, bold, fontSize, align}: ResumeInputProps) {
+function ResumeInput({type = 'text', className, value, setValue, onChange, placeholder, style, wrapperStyle, bold, fontSize, align}: ResumeInputProps) {
 
     // region [Styles]
 
@@ -76,7 +76,7 @@ function ResumeInput({type = 'text', className, value, setValue, onChange, place
 
 
     return (
-        <div ref={wrapperRef} className={`simple-resume__input__wrapper ${rootClassName}`}>
+        <div ref={wrapperRef} className={`simple-resume__input__wrapper ${rootClassName}`} style={wrapperStyle}>
             <input type={'text'} className={`simple-resume__input`}
                    value={value} onChange={onChangeValue} style={rootStyle} placeholder={placeholder}
                    onFocus={onFocus} onBlur={onBlur} />

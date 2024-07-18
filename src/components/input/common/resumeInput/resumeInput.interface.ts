@@ -8,6 +8,7 @@ export interface ResumeInputProps {
 
     className?: string
     placeholder?: string
+    wrapperStyle?: CSSProperties
     style?: CSSProperties
     bold?: boolean
     fontSize?: number
