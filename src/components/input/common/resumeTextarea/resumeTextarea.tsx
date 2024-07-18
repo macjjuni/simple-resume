@@ -1,13 +1,15 @@
 'use client';
 
-import {ChangeEvent, CSSProperties, forwardRef, MutableRefObject, Ref, useCallback, useImperativeHandle, useMemo, useRef} from 'react';
-import {ResumeTextareaRefs, ResumeTextareaProps} from '@/components/input/common/resumeTextarea/resumeTextarea.interface';
+import {ChangeEvent, CSSProperties, forwardRef, memo, useCallback, useImperativeHandle, useMemo, useRef} from 'react';
+import {ResumeTextareaProps, ResumeTextareaRefs} from '@/components/input/common/resumeTextarea/resumeTextarea.interface';
 import './resumeTextarea.scss';
 
 const focusClassName = 'simple-resume__textarea__wrapper--focus';
 
 
-const ResumeTextarea = forwardRef<ResumeTextareaRefs>(({className, value, onChange, placeholder, style, bold, fontSize, align, onResize}: ResumeTextareaProps, ref) => {
+const ResumeTextarea = forwardRef<ResumeTextareaRefs>(({
+        className, value, onChange, placeholder, style, bold, fontSize, align, onResize
+    }: ResumeTextareaProps, ref) => {
 
     // region [Hooks]
 
@@ -66,6 +68,7 @@ const ResumeTextarea = forwardRef<ResumeTextareaRefs>(({className, value, onChan
     }, []);
 
     const handleResizeHeight = useCallback(() => {
+        console.log(123);
         if (rootRef.current) {
             rootRef.current!.style.height = 'auto';
             onResize(rootRef.current!.scrollHeight);

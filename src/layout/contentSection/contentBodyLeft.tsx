@@ -1,15 +1,13 @@
-import {memo, useRef, useState} from 'react';
-import ResumeInputList from '@/components/input/common/resumeInputList/resumeInputList';
+import {memo, useRef} from 'react';
 import {EducateInputList, EducateTitleInput, SkillTitleInput} from '@/components/input';
 import {ResumeListInputRef} from '@/components/input/common/resumeInputList/resumeInputList.interface';
 import {EducateListInputRef} from '@/components/input/content/educateInputList/educateInputList.interface';
+import ResumeInputList from '@/components/input/common/resumeInputList/resumeInputList';
 
 function ContentBodyLeft() {
 
     // region [Hooks]
 
-    const [educate, setEducate] = useState([]);
-    const [skills, setSkills] = useState([]);
     const educateListInputRef = useRef<EducateListInputRef>();
     const skillInputListRef = useRef<ResumeListInputRef>();
 
@@ -25,11 +23,11 @@ function ContentBodyLeft() {
 
             <div className="simple-resume__content__body__left__body">
 
-                <EducateInputList ref={educateListInputRef} value={educate} setValue={setEducate}/>
+                <EducateInputList ref={educateListInputRef} />
 
                 <div className="simple-resume__content__body__left__body__skill__container">
-                    <SkillTitleInput listInputRef={skillInputListRef}/>
-                    <ResumeInputList ref={skillInputListRef} value={skills} setValue={setSkills}/>
+                    <SkillTitleInput listInputRef={skillInputListRef} />
+                    <ResumeInputList ref={skillInputListRef} />
                 </div>
             </div>
 

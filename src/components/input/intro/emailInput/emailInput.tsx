@@ -2,7 +2,7 @@
 
 import {memo, useState} from 'react';
 import ResumeInput from '@/components/input/common/resumeInput/resumeInput';
-import {MailSvg} from '@/components/svg';
+import {MailSvg} from '../../../svg';
 import '@/components/input/intro/intro.common.scss';
 
 function EmailInput() {

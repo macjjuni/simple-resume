@@ -5,22 +5,23 @@
 
 
     .simple-resume__input-list {
+        position: relative;
         display: flex;
         flex-direction: column;
         justify-content: flex-start;
         align-items: flex-start;
-        gap: 8px;
+        padding: 4px 16px 0 0;
 
         .simple-resume__input-list__item {
-            padding-left: 8px;
             position: relative;
             width: calc(100% - 8px);
+            padding: 4px 0 4px 16px;
 
             &:after{
                 content: '';
                 position: absolute;
                 top: 48%;
-                left: 0;
+                left: 4px;
                 width: 4px;
                 height: 4px;
                 border-radius: 50%;
@@ -28,15 +29,24 @@
                 transform: translate(0, -50%);
             }
 
-            .simple-resume__input-list__item__remove-button {
+            .simple-resume__input-list__item__drag-icon {
                 position: absolute;
                 top: -8px;
-                right: -8px;
+                left: 2px;
+                width: 16px;
+                height: 16px;
+                cursor: move;
+            }
+
+            .simple-resume__input-list__item__remove-button {
+                position: absolute;
+                top: -2px;
+                right: -6px;
                 width: 16px;
                 height: 16px;
                 border-radius: 50%;
                 border: none;
-                background-color: red;
+                background-color: #ff3838;
                 transition: 0.24s ease;
                 cursor: pointer;
                 z-index: 1;
@@ -72,7 +82,7 @@
 
 
 @media print {
-    .simple-resume__input-list__item__remove-button {
+    .simple-resume__input-list__item__remove-button, .simple-resume__input-list__item__drag-icon {
         display: none;
     }
 }

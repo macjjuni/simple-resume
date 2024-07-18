@@ -1,34 +1,31 @@
 'use client';
 
-import React, {ChangeEvent, forwardRef, ForwardedRef, useCallback, useEffect, useImperativeHandle, useRef, useMemo} from 'react';
+import React, {ChangeEvent, forwardRef, ForwardedRef, useCallback, useEffect, useImperativeHandle, useRef, useMemo, useState} from 'react';
 import ResumeInput from '@/components/input/common/resumeInput/resumeInput';
 import {ResumeInputListProps, ResumeListInputRef} from '@/components/input/common/resumeInputList/resumeInputList.interface';
 import generateRandomString from '@/utils/random';
 import './resumeInputList.scss';
+import useDraggable from '@/utils/useDraggable';
 
-const ResumeListInput = (
-    {
-        type = 'text',
-        className,
-        value,
-        setValue,
-        onChange,
-        placeholder,
-        style,
-        bold,
-        fontSize,
-        align,
-    }: ResumeInputListProps, ref: ForwardedRef<ResumeListInputRef>,
-) => {
+const ResumeListInput = ({ type = 'text', className, onChange, placeholder, style,
+        bold, fontSize, align }: ResumeInputListProps, ref: ForwardedRef<ResumeListInputRef>) => {
+
+    // region [Hooks]
+
+    const {items: skills, setItems: setSkills, handleDragOver, onDragEnd, onDrop, onMouseUp, handleTargetMouseDown}
+        = useDraggable([]);
+
+    // endregion
+
 
     // region [APIs]
 
     const addListItem = useCallback(() => {
-        if(value.length > 15) {
+        if(skills.length > 15) {
             return;
         }
-        setValue?.(prev => ([...prev, {id: generateRandomString(), value: ''}]));
-    }, [setValue]);
+        setSkills(prev => ([...prev, {id: generateRandomString(), value: ''}]));
+    }, [setSkills]);
 
     useImperativeHandle(ref, () => ({
         addListItem: () => addListItem(),
@@ -40,25 +37,25 @@ const ResumeListInput = (
     // region [Events]
 
     const onChangeValue = useCallback((e: ChangeEvent<HTMLInputElement>, idx: number) => {
-        setValue?.(prev =>
+        setSkills(prev =>
             prev.map((item, index) =>
                 index === idx ? {...item, value: e.target.value} : item,
             ),
         );
         onChange?.(e, idx);
-    }, [setValue, onChange]);
+    }, [setSkills, onChange]);
 
     const onClickRemoveItem = useCallback((idx: number) => {
-        setValue?.(prev => prev.filter((item, index) => index !== idx));
-    }, [setValue]);
+        setSkills(prev => prev.filter((item, index) => index !== idx));
+    }, [setSkills]);
 
     // endregion
 
     // region [Privates]
 
     const isShowRemoveButton = useMemo(() => {
-        return value.length > 1;
-    }, [value]);
+        return skills.length > 1;
+    }, [skills]);
 
     // endregion
 
@@ -75,8 +72,20 @@ const ResumeListInput = (
         <div className={'simple-resume__input-list__wrapper'}>
             <ul className={'simple-resume__input-list'}>
                 {
-                    value.map((item, idx) => (
-                        <li key={item.id} className={'simple-resume__input-list__item'}>
+                    skills.map((item, idx) => (
+                        <li key={item.id} className={'simple-resume__input-list__item'} draggable={false}
+                            onDragEnd={onDragEnd} onDrop={onDrop} onMouseUp={onMouseUp}
+                            onDragOver={(e) => { handleDragOver(e, idx);}}>
+
+                            {
+                                skills.length > 1 && (
+                                    <div className={'simple-resume__input-list__item__drag-icon'}
+                                         onMouseDown={(e) => handleTargetMouseDown(e, idx)} onMouseUp={onMouseUp}>
+                                        📌
+                                    </div>
+                                )
+                            }
+
                             <ResumeInput value={item.value} onChange={(e) => { onChangeValue(e, idx); }}
                                          className={'simple-resume__input-list__item__input'} placeholder={placeholder}
                                          bold={bold} fontSize={fontSize} align={align}/>

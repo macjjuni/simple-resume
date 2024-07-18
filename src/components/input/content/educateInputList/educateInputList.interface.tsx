@@ -11,8 +11,3 @@ interface EducateVO {
 export interface EducateListInputRef {
     addEducateItem: () => void
 }
-
-export interface EducateInputListProps {
-    value: EducateVO[]
-    setValue: Dispatch<SetStateAction<EducateVO[]>>
-}

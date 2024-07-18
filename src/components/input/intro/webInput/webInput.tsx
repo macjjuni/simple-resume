@@ -2,7 +2,7 @@
 
 import {memo, useState} from 'react';
 import ResumeInput from '@/components/input/common/resumeInput/resumeInput';
-import {WebSvg} from '@/components/svg';
+import {WebSvg} from '../../../svg';
 import '@/components/input/intro/intro.common.scss';
 
 function WebInput() {
