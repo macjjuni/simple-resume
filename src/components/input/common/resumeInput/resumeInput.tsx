@@ -1,7 +1,8 @@
+'use client'
+
 import {ChangeEvent, CSSProperties, memo, useCallback, useMemo, useRef} from 'react';
 import './resumeInput.scss'
 import {ResumeInputProps} from '@/components/input/common/resumeInput/resumeInput.interface';
-import {set} from 'immutable';
 
 
 const focusClassName = 'simple-resume__input__wrapper--focus';

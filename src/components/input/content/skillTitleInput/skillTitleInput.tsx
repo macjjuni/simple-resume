@@ -3,6 +3,7 @@
 import {memo, MutableRefObject, useCallback, useState} from 'react';
 import {SubTitle} from '@/components/input';
 import {ResumeListInputRef} from '@/components/input/common/resumeInputList/resumeInputList.interface';
+import AddButton from '@/components/svg/addButton';
 import "./skillTitleInput.scss";
 
 function SkillTitleInput({listInputRef}: {listInputRef: MutableRefObject<ResumeListInputRef | undefined>}) {
@@ -25,7 +26,6 @@ function SkillTitleInput({listInputRef}: {listInputRef: MutableRefObject<ResumeL
 
     // region [Events]
 
-
     const onClickAddSkillItem = useCallback(() => {
         addSkillItem();
     }, [addSkillItem]);
@@ -38,7 +38,9 @@ function SkillTitleInput({listInputRef}: {listInputRef: MutableRefObject<ResumeL
             <SubTitle className="skill__title__input"
                       value={skillTitle} setValue={setSkillTitle} placeholder={'Skills'} />
             <button type={'button'} onClick={onClickAddSkillItem} aria-label="add skill button"
-                    className={'simple-resume__add-button'}/>
+                    className={'simple-resume__add-button'}>
+                <AddButton />
+            </button>
         </div>
     );
 };

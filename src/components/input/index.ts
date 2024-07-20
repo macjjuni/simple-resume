@@ -8,4 +8,6 @@ export { default as GithubInput } from '@/components/input/intro/githubInput/git
 export { default as EducateInputList } from '@/components/input/content/educateInputList/educateInputList';
 export { default as EducateTitleInput } from '@/components/input/content/educateTitleInput/educateTitleInput';
 export { default as SkillTitleInput } from '@/components/input/content/skillTitleInput/skillTitleInput';
+export { default as WorkExperienceTitleInput } from '@/components/input/content/workExperienceTitleInput/workExperienceTitleInput';
+export { default as WorkExperienceInputList } from '@/components/input/content/workExperienceInputList/WorkExperienceInputList';
 

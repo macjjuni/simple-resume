@@ -7,6 +7,7 @@ export interface SubtitleProps {
     onChange?: (e: ChangeEvent<HTMLInputElement>) => void
 
     className?: string
+    wrapperClassName?: string
     placeholder?: string
     align: 'left' | 'center' | 'right'
 }

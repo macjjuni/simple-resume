@@ -10,32 +10,29 @@
         flex-direction: column;
         justify-content: flex-start;
         align-items: flex-start;
-        padding: 4px 16px 0 0;
+
+
+        &.simple-resume__input-list__wrapper--dot {
+
+            .simple-resume__input-list__item::after {
+                content: none;
+            }
+        }
 
         .simple-resume__input-list__item {
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
             position: relative;
             width: calc(100% - 8px);
-            padding: 4px 0 4px 16px;
+            padding: 4px 0 4px 0;
 
-            &:after{
-                content: '';
-                position: absolute;
-                top: 48%;
-                left: 4px;
+            .simple-resume__input-list__item__dot {
+                display: inline-block;
                 width: 4px;
                 height: 4px;
                 border-radius: 50%;
                 background-color: #000;
-                transform: translate(0, -50%);
-            }
-
-            .simple-resume__input-list__item__drag-icon {
-                position: absolute;
-                top: -8px;
-                left: 2px;
-                width: 16px;
-                height: 16px;
-                cursor: move;
             }
 
             .simple-resume__input-list__item__remove-button {
@@ -82,7 +79,7 @@
 
 
 @media print {
-    .simple-resume__input-list__item__remove-button, .simple-resume__input-list__item__drag-icon {
+    .simple-resume__input-list__item__remove-button {
         display: none;
     }
 }

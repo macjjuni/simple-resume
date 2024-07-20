@@ -9,40 +9,25 @@
     $simple-resume__content__right__width: calc(100% - 240px);
 
     .simple-resume__add-button {
+        display: flex;
+        justify-content: center;
+        align-items: center;
         position: relative;
-        width: 24px;
-        height: 24px;
+        width: 20px; height: 20px;
         border-radius: 50%;
-        border: 1px solid #eee;
-        background-color: #45a2ff;
+        background-color: transparent;
         transition: 0.24s ease;
         cursor: pointer;
         z-index: 10;
+        outline: 0;
+        border: none;
         box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+        overflow: hidden;
 
-        &:after, &:before {
-            content: '';
+        svg {
             position: absolute;
-            background-color: #fff;
+            top: 50%; left: 50%;
             transform: translate(-50%, -50%);
-            border-radius: 2px;
-        }
-
-        &:after {
-            width: 2px;
-            height: 12px;
-            top: 50%;
-            left: 50%;
-        }
-        &:before {
-            width: 12px;
-            height: 2px;
-            top: 50%;
-            left: 50%;
-        }
-
-        &:hover {
-            box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
         }
     }
 
@@ -73,6 +58,10 @@
                 display: flex;
                 flex-direction: column;
                 gap: 8px;
+
+                .simple-resume__input-list {
+                    padding: 4px 16px 0 0;
+                }
             }
         }
 
@@ -95,11 +84,6 @@
             padding: 16px;
             border-bottom: 1px solid #000;
         }
-
-        .simple-resume__content__body__right__body {
-            padding: 16px;
-        }
-
     }
 
 }

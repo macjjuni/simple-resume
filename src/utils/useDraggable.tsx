@@ -1,13 +1,15 @@
-import {useState, useCallback, useRef, DragEvent, MouseEvent as ReactMouseEvent, Dispatch, SetStateAction, CSSProperties} from 'react';
+'use client'
+
+import {useState, useCallback, useRef, DragEvent, MouseEvent, Dispatch, SetStateAction, CSSProperties} from 'react';
 
 interface DraggableListProps<T> {
     items: T;
     setItems: Dispatch<SetStateAction<T>>;
-    handleDragStart: (e: ReactMouseEvent<HTMLDivElement>, index: number) => void;
+    handleDragStart: (e: MouseEvent<HTMLDivElement>, index: number) => void;
     handleDragOver: (e: DragEvent<HTMLLIElement>, index: number) => void;
     onDrop: () => void;
     onDragEnd: () => void;
-    handleTargetMouseDown: (e: ReactMouseEvent<HTMLDivElement>, index: number) => void;
+    handleTargetMouseDown: (e: MouseEvent<HTMLDivElement>, index: number) => void;
     onMouseUp: () => void;
 }
 
@@ -50,7 +52,7 @@ const useDraggable = <T,>(initialItems: T): DraggableListProps<T> => {
 
     // region [Events]
 
-    const handleDragStart = useCallback((e: ReactMouseEvent<HTMLDivElement>, index: number) => {
+    const handleDragStart = useCallback((e: MouseEvent<HTMLDivElement>, index: number) => {
         setDraggedItemIndex(index);
         dragItemRef.current = e.currentTarget.closest('li');
         applyDragStyles(dragOnStyle);
@@ -85,7 +87,7 @@ const useDraggable = <T,>(initialItems: T): DraggableListProps<T> => {
         resetDragStyles();
     }, [resetDragStyles]);
 
-    const handleTargetMouseDown = useCallback((e: ReactMouseEvent<HTMLDivElement>, index: number) => {
+    const handleTargetMouseDown = useCallback((e: MouseEvent<HTMLDivElement>, index: number) => {
         const target = e.target as HTMLElement;
         dragItemRef.current = target.closest('li');
         if (dragItemRef.current) {
@@ -95,7 +97,6 @@ const useDraggable = <T,>(initialItems: T): DraggableListProps<T> => {
     }, [handleDragStart]);
 
     const onMouseUp = useCallback(() => {
-        console.log(dragItemRef.current);
         if (dragItemRef.current) {
             applyDragStyles(dragOffStyle);
             dragItemRef.current!.draggable = false;

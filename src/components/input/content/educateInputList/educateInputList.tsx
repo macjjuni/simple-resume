@@ -1,6 +1,6 @@
 'use client';
 
-import React, {ChangeEvent, ForwardedRef, forwardRef, memo, useCallback, useEffect, useImperativeHandle, useState} from 'react';
+import React, {ChangeEvent, ForwardedRef, forwardRef, useCallback, useEffect, useImperativeHandle} from 'react';
 import {EducateListInputRef} from '@/components/input/content/educateInputList/educateInputList.interface';
 import ResumeInput from '@/components/input/common/resumeInput/resumeInput';
 import generateRandomString from '@/utils/random';
@@ -113,7 +113,7 @@ const EducateInputList = (_, ref: ForwardedRef<EducateListInputRef>) => {
 
                         {
                             educationList.length > 1 && (
-                                <div className={'simple-resume__educate-input-list__item__drag-icon'}
+                                <div className={'drag-icon'}
                                      onMouseDown={(e) => handleTargetMouseDown(e, idx)} onMouseUp={onMouseUp}>
                                     📌
                                 </div>

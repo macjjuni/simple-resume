@@ -1,0 +1,49 @@
+
+.work-experience__input__list {
+
+    .work-experience__input__list__item {
+        padding: 16px;
+        position: relative;
+
+        .work-experience__input__list__item__remove-button {
+            position: absolute;
+            top: 8px;
+            right: 10px;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            border: none;
+            background-color: #ff3838;
+            transition: 0.24s ease;
+            cursor: pointer;
+            z-index: 1;
+
+            &:after, &:before {
+                content: '';
+                position: absolute;
+                background-color: #fff;
+                transform: translate(-50%, -50%) rotate(45deg);
+                border-radius: 2px;
+            }
+
+            &:after {
+                width: 2px;
+                height: 12px;
+                top: 50%;
+                left: 50%;
+            }
+            &:before {
+                width: 12px;
+                height: 2px;
+                top: 50%;
+                left: 50%;
+            }
+
+            &:hover {
+                box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
+            }
+        }
+
+        .work-experience__input__list__item__position, .work-experience__input__list__item__date { width: 160px; }
+    }
+}

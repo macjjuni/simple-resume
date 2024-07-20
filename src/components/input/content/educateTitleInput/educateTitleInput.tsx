@@ -4,6 +4,7 @@ import {memo, MutableRefObject, useCallback, useState} from 'react';
 import {SubTitle} from '@/components/input';
 import {EducateListInputRef} from '@/components/input/content/educateInputList/educateInputList.interface';
 import "./educateTitleInput.scss"
+import AddButton from '@/components/svg/addButton';
 
 function EducateTitleInput({listInputRef}: { listInputRef: MutableRefObject<EducateListInputRef | undefined> }) {
 
@@ -38,7 +39,9 @@ function EducateTitleInput({listInputRef}: { listInputRef: MutableRefObject<Educ
             <SubTitle value={educateTitle} setValue={setEducateTitle} placeholder={'Education'}
                       className={'educate__title__input'}/>
             <button type={'button'} onClick={onClickAddEducateItem} aria-label="add educate button"
-                    className={'simple-resume__add-button'}/>
+                    className={'simple-resume__add-button'}>
+                <AddButton />
+            </button>
         </>
     );
 };

@@ -10,4 +10,5 @@ export interface ResumeInputListProps {
     bold?: boolean
     fontSize?: number
     align?: 'left' | 'center' | 'right'
+    listStyle?: boolean
 }

@@ -1,0 +1,9 @@
+
+.simple-resume__work-experience__container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 8px;
+
+    .work-experience__title__input { width: calc(100% - (8px + 24px)); }
+}

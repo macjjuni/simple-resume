@@ -1,19 +1,20 @@
-import {memo, useState} from 'react';
-import {SubTitle} from '@/components/input';
-import DraggableList from '@/components/draggableList/draggableList';
+import {memo, useRef} from 'react';
+import {WorkExperienceInputList, WorkExperienceTitleInput} from '@/components/input';
+import {WorkExperienceInputListRef} from '@/components/input/content/workExperienceInputList/workExperienceInputList.interface';
 
 function ContentBodyRight() {
 
-    const [workTitle, setWorkTitle] = useState('');
-    const [list, setList] = useState(['123', '321']);
+    const workExperienceListRef = useRef<WorkExperienceInputListRef>();
+
 
     return (
         <div className="simple-resume__content__body__right">
             <div className="simple-resume__content__body__right__header">
-                <SubTitle value={workTitle} setValue={setWorkTitle} placeholder={'Work Experience'}/>
+                <WorkExperienceTitleInput listInputRef={workExperienceListRef} />
+
             </div>
             <div className="simple-resume__content__body__right__body">
-                <DraggableList {...{list, setList}} />
+                <WorkExperienceInputList ref={workExperienceListRef} />
             </div>
         </div>
     );
