@@ -27,7 +27,7 @@ function ContentBodyLeft() {
 
                 <div className="simple-resume__content__body__left__body__skill__container">
                     <SkillTitleInput listInputRef={skillInputListRef} />
-                    <ResumeInputList ref={skillInputListRef} />
+                    <ResumeInputList ref={skillInputListRef} fontSize={16} />
                 </div>
             </div>
 

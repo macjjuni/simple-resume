@@ -15,6 +15,7 @@ export interface ResumeTextareaProps {
     bold?: boolean
     fontSize?: number
     align?: 'left' | 'center' | 'right'
+    minHeight?: string
 
-    onResize: (height: number) => void
+    onResize?: (height: number) => void
 }

@@ -21,7 +21,6 @@
         z-index: 10;
         outline: 0;
         border: none;
-        box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
         overflow: hidden;
 
         svg {
@@ -89,5 +88,5 @@
 }
 
 @media print {
-    .simple-resume__add-skill-button, .simple-resume__add-button { display: none; }
+    .simple-resume__add-skill-button, .simple-resume__add-button, .simple-resume__add-button > svg { display: none; }
 }

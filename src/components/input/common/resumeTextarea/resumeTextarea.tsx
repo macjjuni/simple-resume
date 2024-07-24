@@ -8,7 +8,7 @@ const focusClassName = 'simple-resume__textarea__wrapper--focus';
 
 
 const ResumeTextarea = forwardRef<ResumeTextareaRefs>(({
-        className, value, onChange, placeholder, style, bold, fontSize, align, onResize
+        className, value, onChange, placeholder, style, bold, fontSize, align, onResize, minHeight = '80px'
     }: ResumeTextareaProps, ref) => {
 
     // region [Hooks]
@@ -35,9 +35,13 @@ const ResumeTextarea = forwardRef<ResumeTextareaRefs>(({
         if (bold) { styles.fontWeight = 'bold'; }
         if (fontSize) { styles.fontSize = `${fontSize}px`; }
         if (align) { styles.textAlign = align; }
+        if (minHeight) {
+            styles.minHeight = minHeight;
+            styles.height = minHeight;
+        }
 
         return styles;
-    }, [style, bold, fontSize, align]);
+    }, [minHeight, style, bold, fontSize, align]);
 
     const rootClassName = useMemo(() => {
         const clazz = [];
@@ -48,9 +52,7 @@ const ResumeTextarea = forwardRef<ResumeTextareaRefs>(({
     }, [className]);
 
     const focusLineClassName = useMemo(() => {
-        if (value.length === 0) {
-            return 'simple-resume__textarea__focus-line--empty'
-        }
+        if (value.length === 0) { return 'simple-resume__textarea__focus-line--empty' }
         return '';
     }, [value])
 
@@ -68,10 +70,10 @@ const ResumeTextarea = forwardRef<ResumeTextareaRefs>(({
     }, []);
 
     const handleResizeHeight = useCallback(() => {
-        console.log(123);
+
         if (rootRef.current) {
             rootRef.current!.style.height = 'auto';
-            onResize(rootRef.current!.scrollHeight);
+            onResize?.(rootRef.current!.scrollHeight);
             rootRef.current!.style.height = `${rootRef.current!.scrollHeight}px`;
         }
     }, [onResize]);
@@ -100,7 +102,7 @@ const ResumeTextarea = forwardRef<ResumeTextareaRefs>(({
         <div ref={wrapperRef} className={'simple-resume__textarea__wrapper'}>
             <textarea ref={rootRef} className={`simple-resume__textarea ${rootClassName}`}
                       value={value} onChange={onChangeTextArea} style={rootStyle} placeholder={placeholder}
-                      onFocus={onFocus} onBlur={onBlur}/>
+                      onFocus={onFocus} onBlur={onBlur} />
             <div className={`simple-resume__textarea__focus-line ${focusLineClassName}`} />
         </div>
     );

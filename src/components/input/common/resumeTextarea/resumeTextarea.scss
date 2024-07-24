@@ -3,6 +3,7 @@
     position: relative;
     width: 100%;
     padding: 2px;
+    font-size: 0;
 
     .simple-resume__textarea__focus-line {
         position: absolute;
@@ -23,7 +24,6 @@
     .simple-resume__textarea {
         position: relative;
         width: 100%;
-        min-height: 80px;
         height: auto;
         outline: 0;
         border: none;
