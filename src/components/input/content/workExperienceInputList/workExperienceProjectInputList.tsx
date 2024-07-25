@@ -22,13 +22,18 @@ const projectMockData = (): ProjectVO[] => ([
     }]);
 
 interface WorkExperienceProjectInputListProps {
+    idx: number,
     projectList: ProjectVO[]
     addProject: (idx: number) => void
-    onChangeProject: (e: any, index: number) => void
+    onChangeProject: (idx: number, project: ProjectVO[]) => void
+}
+
+export interface WorkExperienceProjectInputListRef {
+    getProject: () => ProjectVO[]
 }
 
 
-function WorkExperienceProjectInputList({projectList, addProject, onChangeProject}: WorkExperienceProjectInputListProps, ref: ForwardedRef<WorkExperienceInputListRef>) {
+function WorkExperienceProjectInputList({idx, projectList, addProject, onChangeProject}: WorkExperienceProjectInputListProps, ref: ForwardedRef<WorkExperienceProjectInputListRef>) {
 
     // region [Hooks]
 
@@ -74,21 +79,25 @@ function WorkExperienceProjectInputList({projectList, addProject, onChangeProjec
         ))
     }, [setProjectList]);
 
+    const onClickAddProject = useCallback(() => {
+        addProject(idx);
+    }, [idx, addProject]);
+
     // endregion
 
 
     // region [Privates]
 
     useImperativeHandle(ref, () => ({
-        addWorkExperienceList: () => addWorkExperienceList(),
-    }), [addWorkExperienceList]);
+        getProject: () => items,
+    }), [addWorkExperienceList, items]);
 
     // endregion
 
     // region [Life Cycles]
 
     useEffect(() => {
-        console.log(projectList);
+        setProjectList(projectList);
     }, [projectList]);
 
     // endregion
@@ -113,7 +122,8 @@ function WorkExperienceProjectInputList({projectList, addProject, onChangeProjec
                         <ResumeInput className={'work-experience__project__list__item__project-title'}
                                      value={item.projectTitle} onChange={(e) => { onChangeProjectTitle(e, idx); }}
                                      placeholder={'Project Title'} fontSize={14} bold/>
-                        <button type={'button'} aria-label="add project button" className={'simple-resume__add-button'}>
+                        <button type={'button'} aria-label="add project button" className={'simple-resume__add-button'}
+                            onClick={onClickAddProject}>
                             <AddButton />
                         </button>
                     </div>

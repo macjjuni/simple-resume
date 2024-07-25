@@ -4,7 +4,7 @@ import {WorkExperienceInputListRef} from '@/components/input/content/workExperie
 
 function ContentBodyRight() {
 
-    const workExperienceListRef = useRef<WorkExperienceInputListRef>();
+    const workExperienceListRef = useRef<WorkExperienceInputListRef>(null);
 
 
     return (

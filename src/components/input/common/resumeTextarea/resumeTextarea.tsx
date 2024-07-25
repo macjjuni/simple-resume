@@ -1,15 +1,19 @@
 'use client';
 
-import {ChangeEvent, CSSProperties, forwardRef, memo, useCallback, useImperativeHandle, useMemo, useRef} from 'react';
-import {ResumeTextareaProps, ResumeTextareaRefs} from '@/components/input/common/resumeTextarea/resumeTextarea.interface';
+import {ChangeEvent, CSSProperties, forwardRef, useCallback, useImperativeHandle, useMemo, useRef} from 'react';
+import {
+    ResumeTextareaProps,
+    ResumeTextareaRefs
+} from '@/components/input/common/resumeTextarea/resumeTextarea.interface';
 import './resumeTextarea.scss';
 
 const focusClassName = 'simple-resume__textarea__wrapper--focus';
 
 
-const ResumeTextarea = forwardRef<ResumeTextareaRefs>(({
-        className, value, onChange, placeholder, style, bold, fontSize, align, onResize, minHeight = '80px'
-    }: ResumeTextareaProps, ref) => {
+const ResumeTextarea = forwardRef<ResumeTextareaRefs, ResumeTextareaProps>((
+    { className, value, onChange, placeholder, style, bold, fontSize, align, onResize, minHeight = '80px' },
+    ref
+) => {
 
     // region [Hooks]
 
@@ -32,9 +36,15 @@ const ResumeTextarea = forwardRef<ResumeTextareaRefs>(({
     const rootStyle = useMemo(() => {
         const styles: CSSProperties = {...style};
 
-        if (bold) { styles.fontWeight = 'bold'; }
-        if (fontSize) { styles.fontSize = `${fontSize}px`; }
-        if (align) { styles.textAlign = align; }
+        if (bold) {
+            styles.fontWeight = 'bold';
+        }
+        if (fontSize) {
+            styles.fontSize = `${fontSize}px`;
+        }
+        if (align) {
+            styles.textAlign = align;
+        }
         if (minHeight) {
             styles.minHeight = minHeight;
             styles.height = minHeight;
@@ -46,13 +56,17 @@ const ResumeTextarea = forwardRef<ResumeTextareaRefs>(({
     const rootClassName = useMemo(() => {
         const clazz = [];
 
-        if (className) { clazz.push(className); }
+        if (className) {
+            clazz.push(className);
+        }
 
         return clazz.join(' ');
     }, [className]);
 
     const focusLineClassName = useMemo(() => {
-        if (value.length === 0) { return 'simple-resume__textarea__focus-line--empty' }
+        if (value.length === 0) {
+            return 'simple-resume__textarea__focus-line--empty'
+        }
         return '';
     }, [value])
 
@@ -102,8 +116,8 @@ const ResumeTextarea = forwardRef<ResumeTextareaRefs>(({
         <div ref={wrapperRef} className={'simple-resume__textarea__wrapper'}>
             <textarea ref={rootRef} className={`simple-resume__textarea ${rootClassName}`}
                       value={value} onChange={onChangeTextArea} style={rootStyle} placeholder={placeholder}
-                      onFocus={onFocus} onBlur={onBlur} />
-            <div className={`simple-resume__textarea__focus-line ${focusLineClassName}`} />
+                      onFocus={onFocus} onBlur={onBlur} rows={1}/>
+            <div className={`simple-resume__textarea__focus-line ${focusLineClassName}`}/>
         </div>
     );
 });

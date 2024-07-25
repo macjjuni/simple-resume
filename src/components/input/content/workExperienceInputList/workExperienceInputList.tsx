@@ -1,6 +1,7 @@
 'use client';
 
-import React, {ChangeEvent, ForwardedRef, forwardRef, memo, useCallback, useEffect, useImperativeHandle} from 'react';
+import React, {ChangeEvent, MouseEvent, ForwardedRef, forwardRef,
+    useCallback, useImperativeHandle, useRef} from 'react';
 import ResumeInput from '@/components/input/common/resumeInput/resumeInput';
 import useDraggable from '@/utils/useDraggable';
 import {
@@ -10,7 +11,10 @@ import {
 } from '@/components/input/content/workExperienceInputList/workExperienceInputList.interface';
 import generateRandomString from '@/utils/random';
 import './workExperienceInputList.scss';
-import WorkExperienceProjectInputList, {FlagType} from '@/components/input/content/workExperienceInputList/workExperienceProjectInputList';
+import WorkExperienceProjectInputList
+    , {
+    WorkExperienceProjectInputListRef
+} from '@/components/input/content/workExperienceInputList/workExperienceProjectInputList';
 
 
 const workExperienceMockData = (): WorkExperienceVO[] => ([
@@ -19,7 +23,11 @@ const workExperienceMockData = (): WorkExperienceVO[] => ([
         companyName: '',
         position: '',
         date: '',
-        project: [{ id: generateRandomString(), projectTitle: '', projectDetail: '' }, { id: generateRandomString(), projectTitle: '', projectDetail: '' }],
+        project: [{id: generateRandomString(), projectTitle: '', projectDetail: ''}, {
+            id: generateRandomString(),
+            projectTitle: '',
+            projectDetail: ''
+        }],
     },
 ]);
 
@@ -32,7 +40,7 @@ const projectMockData = (): ProjectVO => (
 );
 
 
-function WorkExperienceInputList(_, ref: ForwardedRef<WorkExperienceInputListRef>) {
+function WorkExperienceInputList(_: any, ref: ForwardedRef<WorkExperienceInputListRef>) {
 
     // region [Hooks]
 
@@ -45,6 +53,7 @@ function WorkExperienceInputList(_, ref: ForwardedRef<WorkExperienceInputListRef
         onMouseUp,
         handleTargetMouseDown,
     } = useDraggable<WorkExperienceVO[]>(workExperienceMockData());
+    const projectInputListRef = useRef<WorkExperienceProjectInputListRef>(null);
 
     // const {items: projectList, setItems: setProjectList, handleProjectDragOver, onProjectDragEnd, onProjectDrop, onProjectMouseUp, handleProjectTargetMouseDown} = useDraggable<WorkExperienceVO[]>(workExperienceMockData());
 
@@ -61,19 +70,15 @@ function WorkExperienceInputList(_, ref: ForwardedRef<WorkExperienceInputListRef
     }, [setWorkExperienceList]);
 
     const addProject = useCallback((index: number) => {
-        console.log(index);
+        console.log(projectInputListRef.current!.getProject())
         setWorkExperienceList(prev => (
             prev.map((item, idx) => {
-                if (index === idx) {
-                    // 배열을 복사하여 새 프로젝트 추가
-                    return {
-                        ...item,
-                        project: [...item.project, projectMockData()],
-                    };
+                if (idx === index) {
+                    return {...item, project: [...projectInputListRef.current?.getProject() || [], projectMockData()] }
                 }
-                return item;
+                return item
             })
-        ));
+        ))
     }, [setWorkExperienceList]);
 
     // endregion
@@ -105,9 +110,17 @@ function WorkExperienceInputList(_, ref: ForwardedRef<WorkExperienceInputListRef
         ));
     }, [setWorkExperienceList]);
 
-    const onClickRemoveWorkExperience = useCallback((e: ChangeEvent<HTMLInputElement>, idx: number) => {
+    const onClickRemoveWorkExperience = useCallback((e: MouseEvent<HTMLButtonElement>, idx: number) => {
         setWorkExperienceList(prev => (
             prev.filter((item, index) => index !== idx)
+        ));
+    }, [setWorkExperienceList]);
+
+    const onChangeProject = useCallback((idx: number, project: ProjectVO[]) => {
+        setWorkExperienceList(prev => (
+            prev.map((item, index) =>
+                index === idx ? {...item, project} : item,
+            )
         ));
     }, [setWorkExperienceList]);
 
@@ -127,7 +140,9 @@ function WorkExperienceInputList(_, ref: ForwardedRef<WorkExperienceInputListRef
         <ul className={'work-experience__input__list'}>
             {workExperienceList.map((item, idx) => (
                 <li key={item.id} className={'work-experience__input__list__item'} draggable={false}
-                    onDragOver={(e) => { handleDragOver(e, idx);}}
+                    onDragOver={(e) => {
+                        handleDragOver(e, idx);
+                    }}
                     onDragEnd={onDragEnd} onDrop={onDrop} onMouseUp={onMouseUp}>
                     {
                         workExperienceList.length > 1 && (
@@ -138,23 +153,32 @@ function WorkExperienceInputList(_, ref: ForwardedRef<WorkExperienceInputListRef
                         )
                     }
                     <ResumeInput className={'work-experience__input__list__item__company-title'}
-                                 value={item.companyName} onChange={(e) => { onChangeCompanyName(e, idx); }}
+                                 value={item.companyName} onChange={(e) => {
+                        onChangeCompanyName(e, idx);
+                    }}
                                  placeholder={'Company'} fontSize={16} bold/>
                     {
                         workExperienceList.length > 1 && (
                             <button type={'button'} aria-label="remove skill button"
                                     className={'work-experience__input__list__item__remove-button'}
-                                    onClick={(e) => { onClickRemoveWorkExperience(e, idx); }}/>
+                                    onClick={(e) => {
+                                        onClickRemoveWorkExperience(e, idx);
+                                    }}/>
                         )
                     }
 
                     <ResumeInput className={'work-experience__input__list__item__position'} fontSize={12}
-                                 value={item.position} onChange={(e) => { onChangePosition(e, idx); }}
+                                 value={item.position} onChange={(e) => {
+                        onChangePosition(e, idx);
+                    }}
                                  placeholder={'Your role/position'}/>
                     <ResumeInput className={'work-experience__input__list__item__date'} fontSize={12}
-                                 value={item.date} onChange={(e) => { onChangeDate(e, idx); }}
+                                 value={item.date} onChange={(e) => {
+                        onChangeDate(e, idx);
+                    }}
                                  placeholder={'Date'}/>
-                    <WorkExperienceProjectInputList projectList={item.project} addProject={addProject} />
+                    <WorkExperienceProjectInputList ref={projectInputListRef} idx={idx} projectList={item.project}
+                                                    addProject={addProject} onChangeProject={onChangeProject}/>
                 </li>
             ))}
         </ul>

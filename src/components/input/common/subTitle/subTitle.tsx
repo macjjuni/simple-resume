@@ -1,10 +1,10 @@
 'use client';
 
-import {ChangeEvent, memo, useCallback, useState} from 'react';
+import {ChangeEvent, memo, useCallback} from 'react';
 import ResumeInput from '@/components/input/common/resumeInput/resumeInput';
 import {SubtitleProps} from '@/components/input/common/subTitle/subTitle.interface';
 
-function SubTitle({ className, value, setValue, onChange, placeholder, align = 'left'}: SubtitleProps) {
+function SubTitle({className, value, setValue, onChange, placeholder, align = 'left'}: SubtitleProps) {
 
     const onChangeValue = useCallback((e: ChangeEvent<HTMLInputElement>) => {
         setValue?.((e.target as HTMLInputElement).value);

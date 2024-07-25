@@ -9,5 +9,5 @@ export interface SubtitleProps {
     className?: string
     wrapperClassName?: string
     placeholder?: string
-    align: 'left' | 'center' | 'right'
+    align?: 'left' | 'center' | 'right'
 }

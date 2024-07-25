@@ -31,7 +31,9 @@ function IntroSection() {
     const onResizeTextarea = useCallback((size: number) => {
         // textarea height + padding + root padding + intro height + gap size
         const newSize = size + 9 + 32 + 12 + 25;
+        console.log(newSize)
         rootRef.current!.style.height = `${newSize}px`;
+        rootRef.current!.style.minHeight = `${newSize}px`;
     }, []);
 
     // endregion
@@ -40,7 +42,7 @@ function IntroSection() {
         <section ref={rootRef} className={'simple-resume__intro'}>
             <div className="simple-resume__intro__left">
                 <SubTitle value={introTitle} setValue={setIntroTitle} placeholder={'About Me'}/>
-                <ResumeTextarea ref={textareaRef} className={'simple-resume__intro__textarea'}
+                <ResumeTextarea ref={textareaRef} className="simple-resume__intro__textarea"
                                 value={intro} onChange={onChangeIntro} placeholder={introPlaceholder}
                                 fontSize={14} onResize={onResizeTextarea}/>
             </div>
