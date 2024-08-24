@@ -6,7 +6,7 @@ import './workExperienceTitleInput.scss';
 import {WorkExperienceInputListRef} from '@/components/input/content/workExperienceInputList/workExperienceInputList.interface';
 import AddButton from '@/components/svg/addButton';
 
-function WorkExperienceTitleInput({listInputRef}: {listInputRef: MutableRefObject<WorkExperienceInputListRef | undefined>}) {
+function WorkExperienceTitleInput({listInputRef}: {listInputRef: MutableRefObject<WorkExperienceInputListRef | null>}) {
 
     // region[Privates]
 

@@ -1,46 +1,62 @@
 
 .work-experience__project__list {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  margin-top: 20px;
+
+  .work-experience__project__list__item {
+    position: relative;
     display: flex;
     flex-direction: column;
-    gap: 24px;
-    margin-top: 20px;
+    gap: 8px;
 
-    .work-experience__project__list__item {
-        display: flex;
-        flex-direction: column;
-        gap: 8px;
-
-        .work-experience__project__list__item__title__item {
-            display: flex;
-            justify-content: flex-start;
-            align-items: center;
-            gap: 8px;
-
-            .work-experience__project__list__item__drag-icon {
-
-            }
-
-            .work-experience__project__list__item__project-title {
-                width: calc(100% - (16px + 24px + 8px));
-            }
-        }
-
-        .simple-resume__input-list__wrapper > .simple-resume__input-list > .simple-resume__input-list__item {
-            padding-left: 12px;
-        }
-
-        .work-experience__project__list__item__detail__item {
-            padding-left: 12px;
-
-            .simple-resume__textarea {
-                line-height: 1.4;
-            }
-        }
+    &:hover {
+      .work-experience__project__list__item__title__item .work-experience__project__list__item__drag-icon {
+        display: block;
+      }
+      .work-experience__project__list__item__title__item .remove-icon {
+        display: block;
+      }
     }
+
+    .work-experience__project__list__item__title__item {
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+      gap: 8px;
+
+      .remove-icon { display: none; }
+
+      .work-experience__project__list__item__drag-icon {
+        display: none;
+        position: absolute;
+        top: 2px;
+        left: 0;
+        cursor: move;
+      }
+
+      .work-experience__project__list__item__project-title {
+        width: calc(100% - (16px + 24px + 8px));
+      }
+    }
+
+    .simple-resume__input-list__wrapper > .simple-resume__input-list > .simple-resume__input-list__item {
+      padding-left: 12px;
+    }
+
+    .work-experience__project__list__item__detail__item {
+      padding-left: 12px;
+
+      .simple-resume__textarea {
+        line-height: 1.4;
+      }
+    }
+  }
 }
 
 @media print {
-    .work-experience__project__list__item__drag-icon {
-        display: none;
-    }
+  .work-experience__project__list__item__drag-icon {
+    display: none;
+  }
 }

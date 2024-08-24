@@ -52,7 +52,7 @@ function WorkExperienceInputList(_: any, ref: ForwardedRef<WorkExperienceInputLi
         onDrop,
         onMouseUp,
         handleTargetMouseDown,
-    } = useDraggable<WorkExperienceVO[]>(workExperienceMockData());
+    } = useDraggable<WorkExperienceVO>(workExperienceMockData());
     const projectInputListRef = useRef<WorkExperienceProjectInputListRef>(null);
 
     // const {items: projectList, setItems: setProjectList, handleProjectDragOver, onProjectDragEnd, onProjectDrop, onProjectMouseUp, handleProjectTargetMouseDown} = useDraggable<WorkExperienceVO[]>(workExperienceMockData());
@@ -160,7 +160,7 @@ function WorkExperienceInputList(_: any, ref: ForwardedRef<WorkExperienceInputLi
                     {
                         workExperienceList.length > 1 && (
                             <button type={'button'} aria-label="remove skill button"
-                                    className={'work-experience__input__list__item__remove-button'}
+                                    className={'remove-icon'}
                                     onClick={(e) => {
                                         onClickRemoveWorkExperience(e, idx);
                                     }}/>

@@ -11,7 +11,6 @@ function ContentBodyRight() {
         <div className="simple-resume__content__body__right">
             <div className="simple-resume__content__body__right__header">
                 <WorkExperienceTitleInput listInputRef={workExperienceListRef} />
-
             </div>
             <div className="simple-resume__content__body__right__body">
                 <WorkExperienceInputList ref={workExperienceListRef} />

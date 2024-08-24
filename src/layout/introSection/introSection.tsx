@@ -1,9 +1,8 @@
 'use client';
 
-import React, {ChangeEvent, memo, useCallback, useRef, useState} from 'react';
-import {EmailInput, PhoneInput, SubTitle, WebInput, GithubInput} from '@/components/input';
+import React, {memo, useCallback, useRef, useState} from 'react';
+import {EmailInput, GithubInput, PhoneInput, SubTitle, WebInput} from '@/components/input';
 import ResumeTextarea from '@/components/input/common/resumeTextarea/resumeTextarea';
-import {ResumeTextareaRefs} from '@/components/input/common/resumeTextarea/resumeTextarea.interface';
 import './introSection.scss';
 
 const introPlaceholder = 'Similar to resume summary - about me is an introduction that \n' +
@@ -15,7 +14,6 @@ function IntroSection() {
     // region [Hooks]
 
     const rootRef = useRef<HTMLDivElement | null>(null);
-    const textareaRef = useRef<ResumeTextareaRefs | null>(null);
     const [introTitle, setIntroTitle] = useState('');
     const [intro, setIntro] = useState('');
 
@@ -24,27 +22,19 @@ function IntroSection() {
 
     // region [Events]
 
-    const onChangeIntro = useCallback((e: ChangeEvent<HTMLTextAreaElement>) => {
-        setIntro(e.target.value);
-    }, []);
-
-    const onResizeTextarea = useCallback((size: number) => {
-        // textarea height + padding + root padding + intro height + gap size
-        const newSize = size + 9 + 32 + 12 + 25;
-        console.log(newSize)
-        rootRef.current!.style.height = `${newSize}px`;
-        rootRef.current!.style.minHeight = `${newSize}px`;
+    const onChangeIntro = useCallback((introText: string) => {
+        setIntro(introText);
     }, []);
 
     // endregion
+
 
     return (
         <section ref={rootRef} className={'simple-resume__intro'}>
             <div className="simple-resume__intro__left">
                 <SubTitle value={introTitle} setValue={setIntroTitle} placeholder={'About Me'}/>
-                <ResumeTextarea ref={textareaRef} className="simple-resume__intro__textarea"
-                                value={intro} onChange={onChangeIntro} placeholder={introPlaceholder}
-                                fontSize={14} onResize={onResizeTextarea}/>
+                <ResumeTextarea value={intro} onChange={onChangeIntro} placeholder={introPlaceholder}
+                                fontSize={14} minHeight={'86px'} />
             </div>
             <div className="simple-resume__intro__right">
                 <PhoneInput/>

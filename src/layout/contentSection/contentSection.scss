@@ -50,6 +50,9 @@
             position: relative;
             display: flex;
             flex-direction: column;
+            align-items: flex-start;
+            padding-top: 4px;
+            padding-right: 1px;
 
             .simple-resume__content__body__left__top__educate-date { width: 70%; }
 

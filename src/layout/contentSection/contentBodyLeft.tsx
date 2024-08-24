@@ -29,6 +29,7 @@ function ContentBodyLeft() {
                     <SkillTitleInput listInputRef={skillInputListRef} />
                     <ResumeInputList ref={skillInputListRef} fontSize={16} />
                 </div>
+
             </div>
 
 

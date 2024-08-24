@@ -1,6 +1,16 @@
 'use client'
 
-import {useState, useCallback, useRef, DragEvent, MouseEvent, Dispatch, SetStateAction, CSSProperties} from 'react';
+import {
+    useState,
+    useCallback,
+    useRef,
+    DragEvent,
+    MouseEvent,
+    Dispatch,
+    SetStateAction,
+    CSSProperties,
+    useEffect
+} from 'react';
 
 interface DraggableListProps<T> {
     items: T;
@@ -25,11 +35,11 @@ const dragOnStyle = {
     boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
 };
 
-const useDraggable = <T,>(initialItems: T): DraggableListProps<T> => {
+const useDraggable = <T,>(initialItems: T[]): DraggableListProps<T[]> => {
 
     // region [Hooks]
 
-    const [items, setItems] = useState<T>(initialItems);
+    const [items, setItems] = useState<T[]>(initialItems);
     const [draggedItemIndex, setDraggedItemIndex] = useState<number | null>(null);
     const [overIndex, setOverIndex] = useState<number | null>(null);
     const dragItemRef = useRef<HTMLElement | null>(null);
@@ -42,9 +52,19 @@ const useDraggable = <T,>(initialItems: T): DraggableListProps<T> => {
     const applyDragStyles = useCallback((style: CSSProperties) => {
         if (dragItemRef.current) {
             Object.keys(style).forEach((key) => {
-                dragItemRef.current!.style[key] = style[key];
+                dragItemRef.current!.style[key as any] = style[key as keyof CSSProperties] as string;
             });
         }
+    }, []);
+
+    // endregion
+
+
+    // region [Privates]
+
+    const initializeItems = useCallback((list: T[]) => {
+        if (list.length === 0) { return; }
+        setItems(list);
     }, []);
 
     // endregion
@@ -67,6 +87,7 @@ const useDraggable = <T,>(initialItems: T): DraggableListProps<T> => {
         setOverIndex(null);
     }, [applyDragStyles]);
 
+
     const handleDragOver = useCallback((e: DragEvent<HTMLLIElement>, index: number) => {
         e.preventDefault();
         if (index !== overIndex) {
@@ -78,6 +99,7 @@ const useDraggable = <T,>(initialItems: T): DraggableListProps<T> => {
             setDraggedItemIndex(index);
         }
     }, [draggedItemIndex, items, overIndex]);
+
 
     const onDrop = useCallback(() => {
         resetDragStyles();
@@ -102,9 +124,14 @@ const useDraggable = <T,>(initialItems: T): DraggableListProps<T> => {
             dragItemRef.current!.draggable = false;
             dragItemRef.current = null;
         }
-    }, []);
+    }, [applyDragStyles]);
 
     // endregion
+
+
+    useEffect(() => {
+        initializeItems(initialItems);
+    }, [initialItems, initializeItems]);
 
 
     return {

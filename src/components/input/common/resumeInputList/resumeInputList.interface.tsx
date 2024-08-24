@@ -1,5 +1,11 @@
 import {CSSProperties} from 'react';
 
+
+export interface ResumeSkillVO {
+    id: string
+    text: string
+}
+
 export interface ResumeListInputRef {
     addListItem: () => void;
 }

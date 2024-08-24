@@ -1,12 +1,9 @@
 'use client';
 
-import React, {ChangeEvent, ForwardedRef, forwardRef, memo, useCallback, useEffect, useImperativeHandle, useRef} from 'react';
+import React, {ChangeEvent, ForwardedRef, forwardRef, useCallback, useEffect, useImperativeHandle} from 'react';
 import ResumeInput from '@/components/input/common/resumeInput/resumeInput';
 import useDraggable from '@/utils/useDraggable';
-import {
-    ProjectVO,
-    WorkExperienceInputListRef,
-} from '@/components/input/content/workExperienceInputList/workExperienceInputList.interface';
+import {ProjectVO,} from '@/components/input/content/workExperienceInputList/workExperienceInputList.interface';
 import generateRandomString from '@/utils/random';
 import Dot from '@/components/svg/dot';
 import ResumeTextarea from '@/components/input/common/resumeTextarea/resumeTextarea';
@@ -33,7 +30,13 @@ export interface WorkExperienceProjectInputListRef {
 }
 
 
-function WorkExperienceProjectInputList({idx, projectList, addProject, onChangeProject}: WorkExperienceProjectInputListProps, ref: ForwardedRef<WorkExperienceProjectInputListRef>) {
+function WorkExperienceProjectInputList(
+    {
+        idx,
+        projectList,
+        addProject,
+        onChangeProject
+    }: WorkExperienceProjectInputListProps, ref: ForwardedRef<WorkExperienceProjectInputListRef>) {
 
     // region [Hooks]
 
@@ -71,10 +74,10 @@ function WorkExperienceProjectInputList({idx, projectList, addProject, onChangeP
         ));
     }, [setProjectList]);
 
-    const onChangeProjectDetail = useCallback((e: ChangeEvent<HTMLTextAreaElement>, index: number) => {
+    const onChangeProjectDetail = useCallback((text: string, index: number) => {
         setProjectList(prev => (
             prev.map((item, idx) => (
-                idx === index ? {...item, projectDetail: e.target.value} : item
+                idx === index ? {...item, projectDetail: text} : item
             ))
         ))
     }, [setProjectList]);
@@ -107,7 +110,9 @@ function WorkExperienceProjectInputList({idx, projectList, addProject, onChangeP
         <ul className={'work-experience__project__list'}>
             {items?.map((item, idx) => (
                 <li key={item.id} className={'work-experience__project__list__item'} draggable={false}
-                    onDragOver={(e) => { handleDragOver(e, idx);}}
+                    onDragOver={(e) => {
+                        handleDragOver(e, idx);
+                    }}
                     onDragEnd={onDragEnd} onDrop={onDrop} onMouseUp={onMouseUp}>
                     <div className="work-experience__project__list__item__title__item">
                         {
@@ -120,15 +125,27 @@ function WorkExperienceProjectInputList({idx, projectList, addProject, onChangeP
                         }
                         <Dot/>
                         <ResumeInput className={'work-experience__project__list__item__project-title'}
-                                     value={item.projectTitle} onChange={(e) => { onChangeProjectTitle(e, idx); }}
+                                     value={item.projectTitle} onChange={(e) => {
+                            onChangeProjectTitle(e, idx);
+                        }}
                                      placeholder={'Project Title'} fontSize={14} bold/>
-                        <button type={'button'} aria-label="add project button" className={'simple-resume__add-button'}
-                            onClick={onClickAddProject}>
-                            <AddButton />
-                        </button>
+                        {
+                            idx === 0 ?
+                                (
+                                    <button type={'button'} aria-label="add project button" onClick={onClickAddProject}
+                                            className={'simple-resume__add-button'}>
+                                        <AddButton/>
+                                    </button>
+                                )
+                                :
+                                (<button type={'button'} aria-label="remove project button" className={'remove-icon'} />)
+                        }
+
                     </div>
                     <div className="work-experience__project__list__item__detail__item">
-                        <ResumeTextarea value={item.projectDetail} onChange={(e) => { onChangeProjectDetail(e, idx) }} fontSize={14} minHeight={'18px'} />
+                        <ResumeTextarea value={item.projectDetail} onChange={(text) => {
+                            onChangeProjectDetail(text, idx)
+                        }} fontSize={14} minHeight={'18px'}/>
                     </div>
                 </li>
             ))}

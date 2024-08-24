@@ -1,12 +1,11 @@
-.simple-resume__intro {
-    display: flex;
-    justify-content: center;
-    align-items: flex-start;
-    gap: 12px;
-    min-height: 160px;
-    height: auto;
 
-    $simple-resume__intro__right__width: 200px;
+$simple-resume__intro__gap: 12px;
+$simple-resume__intro__right__width: 200px;
+
+.simple-resume__intro {
+    position: relative;
+    width: 100%;
+    min-height: 160px;
 
     .simple-resume__intro__left, .simple-resume__intro__right {
         display: flex;
@@ -16,7 +15,8 @@
     }
 
     .simple-resume__intro__left {
-        width: 100%;
+        width: calc(100% - ($simple-resume__intro__right__width + $simple-resume__intro__gap));
+        height: 100%;
         padding-top: 16px;
         padding-left: 12px;
         padding-bottom: 16px;
@@ -24,12 +24,15 @@
     }
 
     .simple-resume__intro__right {
-        display: inline-flex;
+        position: absolute;
+        top: 0;
+        right: 0;
+        display: flex;
         flex-direction: column;
         justify-content: space-between;
+        gap: 8px;
         min-width: $simple-resume__intro__right__width;
         height: 100%;
-        gap: 8px;
         padding: 12px 0;
     }
 }

@@ -1,19 +1,28 @@
 'use client';
 
 import React, {ChangeEvent, ForwardedRef, forwardRef, useCallback, useEffect, useImperativeHandle} from 'react';
-import {EducateListInputRef} from '@/components/input/content/educateInputList/educateInputList.interface';
+import {EducateListInputRef, EducateVO} from '@/components/input/content/educateInputList/educateInputList.interface';
 import ResumeInput from '@/components/input/common/resumeInput/resumeInput';
 import generateRandomString from '@/utils/random';
 import useDraggable from '@/utils/useDraggable';
 import './educateInputList.scss';
 
-const EducateInputList = (_, ref: ForwardedRef<EducateListInputRef>) => {
+
+const EducateInputList = (props: any, ref: ForwardedRef<EducateListInputRef | undefined>) => {
 
 
     // region [Hooks]
 
-    const {items: educationList, setItems: setEducationList, handleDragOver, onDragEnd, onDrop, onMouseUp, handleTargetMouseDown}
-        = useDraggable([]);
+    const {
+        items: educationList,
+        setItems: setEducationList,
+        handleDragOver,
+        onDragEnd,
+        onDrop,
+        onMouseUp,
+        handleTargetMouseDown
+    }
+        = useDraggable<EducateVO>([]);
 
     // endregion
 
@@ -55,7 +64,9 @@ const EducateInputList = (_, ref: ForwardedRef<EducateListInputRef>) => {
     }, []);
 
     const toggleStyle = useCallback((isDate: boolean) => {
-        if (isDate) { return 'simple-resume__input-list__item__toggle-button--on'; }
+        if (isDate) {
+            return 'simple-resume__input-list__item__toggle-button--on';
+        }
         return 'simple-resume__input-list__item__toggle-button--off';
     }, []);
 
@@ -108,7 +119,9 @@ const EducateInputList = (_, ref: ForwardedRef<EducateListInputRef>) => {
             {
                 educationList.map((item, idx) => (
                     <li key={item.id} className={'simple-resume__educate-input-list__item'}
-                        draggable={false} onDragOver={(e) => { handleDragOver(e, idx);}}
+                        draggable={false} onDragOver={(e) => {
+                        handleDragOver(e, idx);
+                    }}
                         onDragEnd={onDragEnd} onDrop={onDrop} onMouseUp={onMouseUp}>
 
                         {
@@ -121,24 +134,33 @@ const EducateInputList = (_, ref: ForwardedRef<EducateListInputRef>) => {
                         }
 
                         <div className={'simple-resume__educate-input-list__item__container'}>
-                            <ResumeInput value={item.text} onChange={(e) => { onChangeEducate(e, idx); }}
+                            <ResumeInput value={item.text} onChange={(e) => {
+                                onChangeEducate(e, idx);
+                            }}
                                          className={'simple-resume__content__body__left__top__educate'}
                                          placeholder={'XXX학교 - XXXXX 공학'} fontSize={16}/>
                             {
                                 educationList.length > 1 && (
                                     <button type={'button'} aria-label="remove skill button"
-                                            className={'simple-resume__input-list__item__remove-button'}
-                                            onClick={() => { onClickRemoveEducateItem(idx); }}/>
+                                            className={'simple-resume__input-list__item__remove-button remove-icon'}
+                                            onClick={() => {
+                                                onClickRemoveEducateItem(idx);
+                                            }}/>
                                 )
                             }
                         </div>
 
-                        <div className={'simple-resume__educate-input-list__item__container'} style={educateDateWrapperStyle(item.isDate)}>
-                            <ResumeInput value={item.date} onChange={(e) => { onChangeEducateDate(e, idx); }}
+                        <div className={'simple-resume__educate-input-list__item__container'}
+                             style={educateDateWrapperStyle(item.isDate)}>
+                            <ResumeInput value={item.date} onChange={(e) => {
+                                onChangeEducateDate(e, idx);
+                            }}
                                          className={'simple-resume__content__body__left__top__educate-date'}
                                          wrapperStyle={educateDateStyle(item.isDate)}
                                          placeholder={'20xx.xx ~ 20xx.xx'} fontSize={12}/>
-                            <button type={'button'} aria-label="remove skill button" onClick={() => { onClickDateToggle(idx); }}
+                            <button type={'button'} aria-label="remove skill button" onClick={() => {
+                                onClickDateToggle(idx);
+                            }}
                                     className={`simple-resume__input-list__item__toggle-button ${toggleStyle(item.isDate)}`}/>
                         </div>
                     </li>
@@ -148,4 +170,5 @@ const EducateInputList = (_, ref: ForwardedRef<EducateListInputRef>) => {
     );
 };
 
+EducateInputList.displayName = 'EducateInputList';
 export default forwardRef(EducateInputList);

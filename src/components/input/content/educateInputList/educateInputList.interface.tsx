@@ -1,7 +1,5 @@
-import {Dispatch, SetStateAction} from 'react';
 
-
-interface EducateVO {
+export interface EducateVO {
     id: string
     text: string
     date: string

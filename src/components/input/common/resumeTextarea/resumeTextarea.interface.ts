@@ -1,13 +1,9 @@
-import {ChangeEvent, CSSProperties } from 'react';
+import {ChangeEvent, CSSProperties, Dispatch, SetStateAction} from 'react';
 
-
-export interface ResumeTextareaRefs {
-    getRef: () => HTMLTextAreaElement | null;
-}
 
 export interface ResumeTextareaProps {
     value: string
-    onChange: (e: ChangeEvent<HTMLTextAreaElement>) => void
+    onChange: (value: string) => void
 
     className?: string
     placeholder?: string
