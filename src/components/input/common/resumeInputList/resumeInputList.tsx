@@ -21,8 +21,8 @@ const ResumeListInput = ({ placeholder, bold, fontSize, align, listStyle = true 
     const setSkills = useStore(state => state.setSkills);
 
 
-    const {items, setItems, handleDragOver, onDragEnd, onDrop,
-        onMouseUp, handleTargetMouseDown} = useDraggable<ResumeSkillVO>(skills);
+    const {handleDragOver, onDragEnd, onDrop,
+        onMouseUp, handleTargetMouseDown} = useDraggable<ResumeSkillVO>(skills, setSkills);
 
     // endregion
 
@@ -42,14 +42,13 @@ const ResumeListInput = ({ placeholder, bold, fontSize, align, listStyle = true 
     // region [APIs]
 
     const addListItem = useCallback(() => {
-        if (items.length > 15) {
+        if (skills.length > 15) {
             return;
         }
 
-        const newList = [...items, {id: generateRandomString(), text: ''}];
-        setItems(newList);
+        const newList = [...skills, {id: generateRandomString(), text: ''}];
         setSkills(newList);
-    }, [items, setItems, setSkills]);
+    }, [skills, setSkills]);
 
     useImperativeHandle(ref, () => ({
         addListItem: () => addListItem(),
@@ -62,37 +61,35 @@ const ResumeListInput = ({ placeholder, bold, fontSize, align, listStyle = true 
 
     const onChangeValue = useCallback((e: ChangeEvent<HTMLInputElement>, idx: number) => {
 
-        const newList = items.map((item, index) =>
+        const newList = skills.map((item, index) =>
             index === idx ? {...item, text: e.target.value} : item);
 
-        setItems(newList);
         setSkills(newList);
-    }, [items, setItems, setSkills]);
+    }, [skills, setSkills]);
 
     const onClickRemoveItem = useCallback((idx: number) => {
 
-        const removedList = items.filter((item, index) => index !== idx);
+        const removedList = skills.filter((item, index) => index !== idx);
 
-        setItems(removedList);
         setSkills(removedList);
-    }, [items, setItems, setSkills]);
+    }, [skills, setSkills]);
 
     // endregion
 
     // region [Privates]
 
     const isShowRemoveButton = useMemo(() => {
-        return items.length > 1;
-    }, [items]);
+        return skills.length > 1;
+    }, [skills]);
 
     // endregion
 
 
     return (
         <div className={`simple-resume__input-list__wrapper ${rootStyle}`}>
-            <ul className={'simple-resume__input-list'}>
+            <ul className={'simple-resume__input-list'} style={{overflow: 'hidden'}}>
                 {
-                    items.map((item, idx) => (
+                    skills.map((item, idx) => (
                         <li key={item.id} className={'simple-resume__input-list__item'} draggable={false}
                             onDragEnd={onDragEnd} onDrop={onDrop} onMouseUp={onMouseUp}
                             onDragOver={(e) => {
@@ -100,7 +97,7 @@ const ResumeListInput = ({ placeholder, bold, fontSize, align, listStyle = true 
                             }}>
 
                             {
-                                items.length > 1 && (
+                                skills.length > 1 && (
                                     <div className={'drag-icon'}
                                          onMouseDown={(e) => handleTargetMouseDown(e, idx)} onMouseUp={onMouseUp}>
                                         📌

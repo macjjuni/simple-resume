@@ -1,8 +1,7 @@
 'use client';
 
-import React, {ChangeEvent, ForwardedRef, forwardRef, useCallback, useEffect, useImperativeHandle} from 'react';
+import React, {ChangeEvent, ForwardedRef, forwardRef, useCallback, useImperativeHandle} from 'react';
 import ResumeInput from '@/components/input/common/resumeInput/resumeInput';
-import useDraggable from '@/utils/useDraggable';
 import {ProjectVO,} from '@/components/input/content/workExperienceInputList/workExperienceInputList.interface';
 import generateRandomString from '@/utils/random';
 import Dot from '@/components/svg/dot';
@@ -16,7 +15,8 @@ const projectMockData = (): ProjectVO[] => ([
         id: generateRandomString(),
         projectTitle: '',
         projectDetail: '',
-    }]);
+    }
+]);
 
 interface WorkExperienceProjectInputListProps {
     idx: number,
@@ -35,20 +35,10 @@ function WorkExperienceProjectInputList(
         idx,
         projectList,
         addProject,
-        onChangeProject
     }: WorkExperienceProjectInputListProps, ref: ForwardedRef<WorkExperienceProjectInputListRef>) {
 
     // region [Hooks]
 
-    const {
-        items,
-        setItems: setProjectList,
-        handleDragOver,
-        onDragEnd,
-        onDrop,
-        onMouseUp,
-        handleTargetMouseDown,
-    } = useDraggable<ProjectVO[]>(projectList);
 
     // endregion
 
@@ -56,10 +46,10 @@ function WorkExperienceProjectInputList(
     // region [APIs]
 
     const addWorkExperienceList = useCallback(() => {
-        setProjectList(prev => (
-            prev.map(item => item).concat(projectMockData())
-        ));
-    }, [setProjectList]);
+        // setProjectList(prev => (
+        //     prev.map(item => item).concat(projectMockData())
+        // ));
+    }, []);
 
     // endregion
 
@@ -67,20 +57,20 @@ function WorkExperienceProjectInputList(
     // region [Events]
 
     const onChangeProjectTitle = useCallback((e: ChangeEvent<HTMLInputElement>, idx: number) => {
-        setProjectList(prev => (
-            prev.map((item, index) =>
-                index === idx ? {...item, projectTitle: e.target.value} : item,
-            )
-        ));
-    }, [setProjectList]);
+        // setProjectList(prev => (
+        //     prev.map((item, index) =>
+        //         index === idx ? {...item, projectTitle: e.target.value} : item,
+        //     )
+        // ));
+    }, []);
 
     const onChangeProjectDetail = useCallback((text: string, index: number) => {
-        setProjectList(prev => (
-            prev.map((item, idx) => (
-                idx === index ? {...item, projectDetail: text} : item
-            ))
-        ))
-    }, [setProjectList]);
+        // setProjectList(prev => (
+        //     prev.map((item, idx) => (
+        //         idx === index ? {...item, projectDetail: text} : item
+        //     ))
+        // ))
+    }, []);
 
     const onClickAddProject = useCallback(() => {
         addProject(idx);
@@ -92,33 +82,35 @@ function WorkExperienceProjectInputList(
     // region [Privates]
 
     useImperativeHandle(ref, () => ({
-        getProject: () => items,
-    }), [addWorkExperienceList, items]);
+        getProject: () => [],
+    }), []);
 
     // endregion
 
     // region [Life Cycles]
 
-    useEffect(() => {
-        setProjectList(projectList);
-    }, [projectList]);
+    // useEffect(() => {
+    //     setProjectList(projectList);
+    // }, [projectList]);
 
     // endregion
 
 
     return (
         <ul className={'work-experience__project__list'}>
-            {items?.map((item, idx) => (
+            {projectList?.map((item, idx) => (
                 <li key={item.id} className={'work-experience__project__list__item'} draggable={false}
-                    onDragOver={(e) => {
-                        handleDragOver(e, idx);
-                    }}
-                    onDragEnd={onDragEnd} onDrop={onDrop} onMouseUp={onMouseUp}>
+                    // onDragOver={(e) => {
+                    //     handleDragOver(e, idx);
+                    // }}
+                    // onDragEnd={onDragEnd} onDrop={onDrop} onMouseUp={onMouseUp}
+                >
                     <div className="work-experience__project__list__item__title__item">
                         {
                             projectList.length > 1 && (
                                 <div className={'work-experience__project__list__item__drag-icon'}
-                                     onMouseDown={(e) => handleTargetMouseDown(e, idx)}>
+                                     // onMouseDown={(e) => handleTargetMouseDown(e, idx)}
+                                >
                                     📌
                                 </div>
                             )
@@ -138,7 +130,7 @@ function WorkExperienceProjectInputList(
                                     </button>
                                 )
                                 :
-                                (<button type={'button'} aria-label="remove project button" className={'remove-icon'} />)
+                                (<button type={'button'} aria-label="remove project button" className={'remove-icon'}/>)
                         }
 
                     </div>

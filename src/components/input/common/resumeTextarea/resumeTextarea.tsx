@@ -1,7 +1,18 @@
 'use client';
 
-import {ChangeEvent, CSSProperties, useCallback, useEffect, useMemo, useRef} from 'react';
-import {ResumeTextareaProps,} from '@/components/input/common/resumeTextarea/resumeTextarea.interface';
+import React, {
+    ChangeEvent,
+    CSSProperties,
+    ForwardedRef, forwardRef,
+    useCallback,
+    useImperativeHandle,
+    useMemo,
+    useRef
+} from 'react';
+import {
+    ResumeTextareaProps,
+    ResumeTextareaRefs,
+} from '@/components/input/common/resumeTextarea/resumeTextarea.interface';
 import './resumeTextarea.scss';
 
 const focusClassName = 'simple-resume__textarea__wrapper--focus';
@@ -9,19 +20,9 @@ const focusClassName = 'simple-resume__textarea__wrapper--focus';
 const blankHtml = ['<div><br></div>', '<br>'];
 
 
-const ResumeTextarea = (
-    {
-        className,
-        value,
-        onChange,
-        placeholder,
-        style,
-        bold,
-        fontSize,
-        align,
-        minHeight = '80px'
-    }: ResumeTextareaProps
-) => {
+function ResumeTextarea({ className, value, onChange, placeholder, style,
+                            bold, fontSize, align, minHeight = '80px'}: ResumeTextareaProps,
+    ref: ForwardedRef<ResumeTextareaRefs>) {
 
     // region [Hooks]
 
@@ -34,7 +35,7 @@ const ResumeTextarea = (
     // region [Styles]
 
     const rootStyle = useMemo(() => {
-        const styles: CSSProperties = {...style};
+        const styles: CSSProperties = { ...style };
 
         if (bold) {
             styles.fontWeight = 'bold';
@@ -54,13 +55,13 @@ const ResumeTextarea = (
 
     const placeholderStyle = useMemo(() => {
         if (fontSize) {
-            return {fontSize: fontSize};
+            return { fontSize: fontSize };
         }
-        return {}
+        return {};
     }, [fontSize]);
 
     const rootClassName = useMemo(() => {
-        const clazz = [];
+        const clazz: string[] = [];
 
         if (className) {
             clazz.push(className);
@@ -71,7 +72,7 @@ const ResumeTextarea = (
 
     const focusLineClassName = useMemo(() => {
         if (value.length === 0) {
-            return 'simple-resume__textarea__focus-line--empty'
+            return 'simple-resume__textarea__focus-line--empty';
         }
         return '';
     }, [value]);
@@ -89,7 +90,9 @@ const ResumeTextarea = (
     // region [Privates]
 
     const initializeContent = useCallback((value: string) => {
-        rootRef.current!.innerHTML = value;
+        if (rootRef.current) {
+            rootRef.current.innerHTML = value;
+        }
     }, []);
 
     const addFocusEffect = useCallback(() => {
@@ -123,35 +126,44 @@ const ResumeTextarea = (
     }, [removeFocusEffect]);
 
     const onClickPlaceholder = useCallback(() => {
-        rootRef.current!.focus();
+        rootRef.current?.focus();
     }, []);
 
     // endregion
 
 
-    // region [Life Cycles]
+    // region [APIs]
 
-    useEffect(() => {
-        if (value !== '') {
-            initializeContent(value);
-        }
-    }, []);
+    useImperativeHandle(ref, () => ({
+        initializeContent,
+    }), [initializeContent]);
 
     // endregion
 
 
     return (
         <div ref={wrapperRef} className={'simple-resume__textarea__wrapper'}>
-            <span className={`simple-resume__textarea__placeholder ${placeholderClassName}`} style={placeholderStyle}
-                  onClick={onClickPlaceholder}>
+            <span
+                className={`simple-resume__textarea__placeholder ${placeholderClassName}`}
+                style={placeholderStyle}
+                onClick={onClickPlaceholder}
+            >
                 {placeholder}
             </span>
-            <div ref={rootRef} className={`simple-resume__textarea ${rootClassName}`} contentEditable onInput={onInput}
-                 onFocus={onFocus} onBlur={onBlur} style={rootStyle} suppressContentEditableWarning/>
-            <div className={`simple-resume__textarea__focus-line ${focusLineClassName}`}/>
+            <div
+                ref={rootRef}
+                className={`simple-resume__textarea ${rootClassName}`}
+                contentEditable
+                onInput={onInput}
+                onFocus={onFocus}
+                onBlur={onBlur}
+                style={rootStyle}
+                suppressContentEditableWarning
+            />
+            <div className={`simple-resume__textarea__focus-line ${focusLineClassName}`}></div>
         </div>
     );
-};
+}
 
 ResumeTextarea.displayName = 'ResumeTextarea';
-export default ResumeTextarea;
+export default  forwardRef(ResumeTextarea);

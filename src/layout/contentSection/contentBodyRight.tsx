@@ -13,7 +13,7 @@ function ContentBodyRight() {
                 <WorkExperienceTitleInput listInputRef={workExperienceListRef} />
             </div>
             <div className="simple-resume__content__body__right__body">
-                <WorkExperienceInputList ref={workExperienceListRef} />
+                {/*<WorkExperienceInputList ref={workExperienceListRef} />*/}
             </div>
         </div>
     );

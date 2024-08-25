@@ -1,14 +1,22 @@
 'use client'
 
-import {memo, useCallback, useState, ChangeEvent} from 'react';
+import {ChangeEvent, memo, useCallback, useState} from 'react';
 import ResumeInput from '@/components/input/common/resumeInput/resumeInput';
 import "./nameInput.scss";
+import {useStore} from "@/store";
 
 function NameInput() {
 
-    const [value, setValue] = useState('');
+    const name = useStore(state => state.name);
+    const setName = useStore(state => state.setName);
 
-    return (<ResumeInput className={'name__input'} value={value} setValue={setValue} placeholder={'Name'}
+
+    const onChangeName = useCallback((e: ChangeEvent<HTMLInputElement>) => {
+        setName(e.target?.value || '');
+    }, [setName]);
+
+
+    return (<ResumeInput className={'name__input'} value={name} onChange={onChangeName} placeholder={'Name'}
                          fontSize={48} align={'center'} bold />);
 }
 

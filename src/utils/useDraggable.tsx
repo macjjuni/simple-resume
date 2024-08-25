@@ -6,15 +6,10 @@ import {
     useRef,
     DragEvent,
     MouseEvent,
-    Dispatch,
-    SetStateAction,
     CSSProperties,
-    useEffect
 } from 'react';
 
 interface DraggableListProps<T> {
-    items: T;
-    setItems: Dispatch<SetStateAction<T>>;
     handleDragStart: (e: MouseEvent<HTMLDivElement>, index: number) => void;
     handleDragOver: (e: DragEvent<HTMLLIElement>, index: number) => void;
     onDrop: () => void;
@@ -35,11 +30,10 @@ const dragOnStyle = {
     boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
 };
 
-const useDraggable = <T,>(initialItems: T[]): DraggableListProps<T[]> => {
+const useDraggable = <T, >(items: T[], onChange: (List: T[]) => void): DraggableListProps<T[]> => {
 
     // region [Hooks]
 
-    const [items, setItems] = useState<T[]>(initialItems);
     const [draggedItemIndex, setDraggedItemIndex] = useState<number | null>(null);
     const [overIndex, setOverIndex] = useState<number | null>(null);
     const dragItemRef = useRef<HTMLElement | null>(null);
@@ -61,12 +55,6 @@ const useDraggable = <T,>(initialItems: T[]): DraggableListProps<T[]> => {
 
 
     // region [Privates]
-
-    const initializeItems = useCallback((list: T[]) => {
-        if (list.length === 0) { return; }
-        setItems(list);
-    }, []);
-
     // endregion
 
 
@@ -95,7 +83,7 @@ const useDraggable = <T,>(initialItems: T[]): DraggableListProps<T[]> => {
             const newItems = [...items];
             const [draggedItem] = newItems.splice(draggedItemIndex!, 1);
             newItems.splice(index, 0, draggedItem);
-            setItems(newItems);
+            onChange?.(newItems);
             setDraggedItemIndex(index);
         }
     }, [draggedItemIndex, items, overIndex]);
@@ -129,14 +117,7 @@ const useDraggable = <T,>(initialItems: T[]): DraggableListProps<T[]> => {
     // endregion
 
 
-    useEffect(() => {
-        initializeItems(initialItems);
-    }, [initialItems, initializeItems]);
-
-
     return {
-        items,
-        setItems,
         handleDragStart,
         handleDragOver,
         onDrop,

@@ -15,3 +15,8 @@ export interface ResumeTextareaProps {
 
     onResize?: (height: number) => void
 }
+
+
+export interface ResumeTextareaRefs {
+    initializeContent: (content: string) => void
+}

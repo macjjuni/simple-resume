@@ -6,6 +6,7 @@ import ResumeInput from '@/components/input/common/resumeInput/resumeInput';
 import generateRandomString from '@/utils/random';
 import useDraggable from '@/utils/useDraggable';
 import './educateInputList.scss';
+import {useStore} from "@/store";
 
 
 const EducateInputList = (props: any, ref: ForwardedRef<EducateListInputRef | undefined>) => {
@@ -13,36 +14,35 @@ const EducateInputList = (props: any, ref: ForwardedRef<EducateListInputRef | un
 
     // region [Hooks]
 
+    const education = useStore(state => state.education)
+    const setEducation = useStore(state => state.setEducation)
+
     const {
-        items: educationList,
-        setItems: setEducationList,
         handleDragOver,
         onDragEnd,
         onDrop,
         onMouseUp,
         handleTargetMouseDown
     }
-        = useDraggable<EducateVO>([]);
+        = useDraggable<EducateVO>(education, setEducation);
 
     // endregion
 
     // region [Privates]
 
     const addEducateItem = useCallback(() => {
-        setEducationList(prev => (
-            [...prev, {id: generateRandomString(), text: '', date: '', isDate: true}]),
-        );
-    }, [setEducationList]);
+        setEducation([...education, {id: generateRandomString(), text: '', date: '', isDate: true}]);
+    }, [education, setEducation]);
 
     const toggleDate = useCallback((idx: number) => {
-        setEducationList(prev => (
-            prev.map((item, index) => index === idx ? {...item, isDate: !item.isDate} : item)
-        ));
-    }, [setEducationList]);
+        const toggledEducation = education.map((item, index) => index === idx ? {...item, isDate: !item.isDate} : item)
+        setEducation(toggledEducation);
+    }, [education, setEducation]);
 
     const removeItem = useCallback((idx: number) => {
-        setEducationList(prev => prev.filter((item, index) => index !== idx));
-    }, [setEducationList]);
+        const removedEducation = education.filter((item, index) => index !== idx);
+        setEducation(removedEducation);
+    }, [education, setEducation]);
 
     // endregion
 
@@ -76,16 +76,16 @@ const EducateInputList = (props: any, ref: ForwardedRef<EducateListInputRef | un
     // region [Events]
 
     const onChangeEducate = useCallback((e: ChangeEvent<HTMLInputElement>, idx: number) => {
-        setEducationList(prev => (
-            prev.map((item, index) => index === idx ? {...item, text: e.target.value} : item)
-        ));
-    }, [setEducationList]);
+
+        const newEducation = education.map((item, index) => index === idx ? {...item, text: e.target.value} : item);
+        setEducation(newEducation);
+    }, [education, setEducation]);
 
     const onChangeEducateDate = useCallback((e: ChangeEvent<HTMLInputElement>, idx: number) => {
-        setEducationList(prev => (
-            prev.map((item, index) => index === idx ? {...item, date: e.target.value} : item)
-        ));
-    }, [setEducationList]);
+
+        const newEducation = education.map((item, index) => index === idx ? {...item, date: e.target.value} : item)
+        setEducation(newEducation);
+    }, [education, setEducation]);
 
     const onClickRemoveEducateItem = useCallback((idx: number) => {
         removeItem(idx);
@@ -100,11 +100,6 @@ const EducateInputList = (props: any, ref: ForwardedRef<EducateListInputRef | un
 
     // region [Life Cycles]
 
-    useEffect(() => {
-        addEducateItem();
-    }, [addEducateItem]);
-
-    // endregion
 
     // region [APIs]
 
@@ -117,7 +112,7 @@ const EducateInputList = (props: any, ref: ForwardedRef<EducateListInputRef | un
     return (
         <ul className={'simple-resume__educate-input-list'}>
             {
-                educationList.map((item, idx) => (
+                education.map((item, idx) => (
                     <li key={item.id} className={'simple-resume__educate-input-list__item'}
                         draggable={false} onDragOver={(e) => {
                         handleDragOver(e, idx);
@@ -125,7 +120,7 @@ const EducateInputList = (props: any, ref: ForwardedRef<EducateListInputRef | un
                         onDragEnd={onDragEnd} onDrop={onDrop} onMouseUp={onMouseUp}>
 
                         {
-                            educationList.length > 1 && (
+                            education.length > 1 && (
                                 <div className={'drag-icon'}
                                      onMouseDown={(e) => handleTargetMouseDown(e, idx)} onMouseUp={onMouseUp}>
                                     📌
@@ -140,7 +135,7 @@ const EducateInputList = (props: any, ref: ForwardedRef<EducateListInputRef | un
                                          className={'simple-resume__content__body__left__top__educate'}
                                          placeholder={'XXX학교 - XXXXX 공학'} fontSize={16}/>
                             {
-                                educationList.length > 1 && (
+                                education.length > 1 && (
                                     <button type={'button'} aria-label="remove skill button"
                                             className={'simple-resume__input-list__item__remove-button remove-icon'}
                                             onClick={() => {
